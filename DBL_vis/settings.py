@@ -25,7 +25,7 @@ SECRET_KEY = 'cp9vrs2drr0a$!ampw-g+^tiw125hqms&op14mfnt!!ido=x=g'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["dbl.logicbit.nl"]
+ALLOWED_HOSTS = ["dbl.logicbit.nl", "localhost"]
 
 
 # Application definition
@@ -37,6 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'bootstrap4',
+    'home',
 ]
 
 MIDDLEWARE = [
@@ -99,6 +101,9 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+BOOTSTRAP4 = {
+    'include_jquery': True,
+}
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.0/topics/i18n/
