@@ -2,6 +2,6 @@
 
 ## Admin login ##
 Use /admin to get to the admin panel.
-Username      | Password
-------------- | -------------
-admin         | 2IOA0
+| Username      | Password      |
+| ------------- | ------------- |
+| admin         | 2IOA0TUE      |
