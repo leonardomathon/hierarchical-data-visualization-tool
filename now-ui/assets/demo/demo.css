@@ -63,6 +63,6 @@
 }
 
 .sidebar .nav>li.tue-logo {
-    position: sticky;
+    position: absolute;
     bottom: 10px;
   }
