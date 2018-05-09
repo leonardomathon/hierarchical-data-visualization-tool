@@ -1,34 +1,42 @@
-{% extends 'bootstrap4/bootstrap4.html' %}
-{% load bootstrap4 %}
-{% load static %}
-{% block bootstrap4_extra_head %}
-<!--     Fonts and icons     -->
-<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
-<link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
-<!-- CSS Files -->
-<link href="{% static "css/bootstrap.min.css" %}" rel="stylesheet" />
-<link href="{% static "css/now-ui-dashboard.css" %}" rel="stylesheet" />
-<!-- CSS Just for demo purpose, don't include it in your project -->
-<link href="{% static "demo/demo.css" %}" rel="stylesheet" />
-{% endblock %}
+<!DOCTYPE html>
+<html lang="en">
 
-{% block bootstrap4_content %}
-<div class="wrapper ">
+<head>
+  <meta charset="utf-8" />
+  <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
+  <link rel="icon" type="image/png" href="../assets/img/favicon.png">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <title>
+    Now UI Dashboard by Creative Tim
+  </title>
+  <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
+  <!--     Fonts and icons     -->
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
+  <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+  <!-- CSS Files -->
+  <link href="../assets/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="../assets/css/now-ui-dashboard.css?v=1.1.0" rel="stylesheet" />
+  <!-- CSS Just for demo purpose, don't include it in your project -->
+  <link href="../assets/demo/demo.css" rel="stylesheet" />
+</head>
+
+<body class="">
+  <div class="wrapper ">
     <div class="sidebar" data-color="orange">
       <!--
         Tip 1: You can change the color of the sidebar using: data-color="blue | green | orange | red | yellow"
     -->
       <div class="logo">
-        <a href="" class="simple-text logo-mini">
-          DBL
+        <a href="http://www.creative-tim.com" class="simple-text logo-mini">
+          CT
         </a>
-        <a href="" class="simple-text logo-normal">
-          Visualization Group 8
+        <a href="http://www.creative-tim.com" class="simple-text logo-normal">
+          Creative Tim
         </a>
       </div>
       <div class="sidebar-wrapper">
         <ul class="nav">
-          <li class="active ">
+          <li>
             <a href="./dashboard.html">
               <i class="now-ui-icons design_app"></i>
               <p>Dashboard</p>
@@ -58,7 +66,7 @@
               <p>User Profile</p>
             </a>
           </li>
-          <li>
+          <li class="active ">
             <a href="./tables.html">
               <i class="now-ui-icons design_bullet-list-67"></i>
               <p>Table List</p>
@@ -70,10 +78,11 @@
               <p>Typography</p>
             </a>
           </li>
-          <li class="tue-logo">
-            <div style="margin-right: auto;margin-left: auto; margin-bottom:0; width: 80%; text-align:center;">
-            <img src="{% static "img/Eindhoven_University_of_Technology_logo.svg" %}" style="width:100%;height:auto;"></img>
-          </div>
+          <li class="active-pro">
+            <a href="./upgrade.html">
+              <i class="now-ui-icons arrows-1_cloud-download-93"></i>
+              <p>Upgrade to PRO</p>
+            </a>
           </li>
         </ul>
       </div>
@@ -90,7 +99,7 @@
                 <span class="navbar-toggler-bar bar3"></span>
               </button>
             </div>
-            <a class="navbar-brand" href="#pablo">Dashboard</a>
+            <a class="navbar-brand" href="#pablo">Table List</a>
           </div>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-bar navbar-kebab"></span>
@@ -143,134 +152,14 @@
         </div>
       </nav>
       <!-- End Navbar -->
-      <div class="panel-header panel-header-lg">
-        <div style="margin-left: 2rem;margin-right: 2rem;color:#fff;">
-        <h1>Welcome to our DBL Visualization!</h1>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas eu turpis varius, pretium mi vel, posuere nisi. Vestibulum rhoncus sagittis risus et pulvinar. Quisque pharetra eleifend lacus vitae mollis. Curabitur dui leo, vulputate et dui id, tincidunt facilisis risus. Proin dolor diam, vulputate sit amet purus in, pharetra dictum sapien. Pellentesque commodo orci et vulputate egestas. Ut condimentum placerat risus, non pulvinar eros aliquet a. Praesent sed porta justo. Vestibulum volutpat convallis nisl, id consectetur neque mattis eu. Integer ultrices, nisi vitae interdum bibendum, erat nisi condimentum justo, et scelerisque augue turpis nec augue. Suspendisse vitae diam neque. Proin metus urna, accumsan ut tempor et, tincidunt ut enim. Cras vitae nibh et augue fringilla hendrerit nec at nisi. Duis sit amet imperdiet magna, ut varius neque. Suspendisse maximus nec orci vel semper. Praesent pulvinar pretium eros vel pretium. Integer dignissim condimentum fermentum. In hac habitasse platea dictumst. Morbi scelerisque consectetur luctus. Suspendisse potenti. Integer et varius augue. Duis nec nibh maximus, rutrum odio id, auctor nibh. Nulla est est, facilisis sit amet tellus sed, lacinia ultrices nunc. In consectetur ut diam nec finibus. Quisque ultricies quam sed est dignissim hendrerit. Nullam ante sem, congue nec odio semper, laoreet condimentum lorem.
-        </p>
-      </div>
+      <div class="panel-header panel-header-sm">
       </div>
       <div class="content">
         <div class="row">
-          <div class="col-lg-4">
-            <div class="card card-chart">
-              <div class="card-header">
-                <h5 class="card-category">Upload a new dataset</h5>
-                <h4 class="card-title"> Upload Dataset</h4>
-              </div>
-              <div class="card-body">
-
-              </div>
-              <div class="card-footer">
-
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-8 col-md-6">
-            <div class="card card-chart">
-              <div class="card-header">
-                <h5 class="card-category">Previously uploaded datasets</h5>
-                <h4 class="card-title"> Previous Datasets</h4>
-              </div>
-              <div class="card-body">
-
-              </div>
-              <div class="card-footer">
-
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-6">
-            <div class="card  card-tasks">
-              <div class="card-header ">
-                <h5 class="card-category">Backend development</h5>
-                <h4 class="card-title">Tasks</h4>
-              </div>
-              <div class="card-body ">
-                <div class="table-full-width table-responsive">
-                  <table class="table">
-                    <tbody>
-                      <tr>
-                        <td>
-                          <div class="form-check">
-                            <label class="form-check-label">
-                              <input class="form-check-input" type="checkbox" checked>
-                              <span class="form-check-sign"></span>
-                            </label>
-                          </div>
-                        </td>
-
-                        <td class="text-left">Sign contract for "What are conference organizers afraid of?"</td>
-                        <td class="td-actions text-right">
-                          <button type="button" rel="tooltip" title="" class="btn btn-info btn-round btn-icon btn-icon-mini btn-neutral" data-original-title="Edit Task">
-                            <i class="now-ui-icons ui-2_settings-90"></i>
-                          </button>
-                          <button type="button" rel="tooltip" title="" class="btn btn-danger btn-round btn-icon btn-icon-mini btn-neutral" data-original-title="Remove">
-                            <i class="now-ui-icons ui-1_simple-remove"></i>
-                          </button>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <div class="form-check">
-                            <label class="form-check-label">
-                              <input class="form-check-input" type="checkbox">
-                              <span class="form-check-sign"></span>
-                            </label>
-                          </div>
-                        </td>
-
-                        <td class="text-left">Lines From Great Russian Literature? Or E-mails From My Boss?</td>
-                        <td class="td-actions text-right">
-                          <button type="button" rel="tooltip" title="" class="btn btn-info btn-round btn-icon btn-icon-mini btn-neutral" data-original-title="Edit Task">
-                            <i class="now-ui-icons ui-2_settings-90"></i>
-                          </button>
-                          <button type="button" rel="tooltip" title="" class="btn btn-danger btn-round btn-icon btn-icon-mini btn-neutral" data-original-title="Remove">
-                            <i class="now-ui-icons ui-1_simple-remove"></i>
-                          </button>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <div class="form-check">
-                            <label class="form-check-label">
-                              <input class="form-check-input" type="checkbox" checked>
-                              <span class="form-check-sign"></span>
-                            </label>
-                          </div>
-                        </td>
-
-                        <td class="text-left">Flooded: One year later, assessing what was lost and what was found when a ravaging rain swept through metro Detroit
-                        </td>
-                        <td class="td-actions text-right">
-                          <button type="button" rel="tooltip" title="" class="btn btn-info btn-round btn-icon btn-icon-mini btn-neutral" data-original-title="Edit Task">
-                            <i class="now-ui-icons ui-2_settings-90"></i>
-                          </button>
-                          <button type="button" rel="tooltip" title="" class="btn btn-danger btn-round btn-icon btn-icon-mini btn-neutral" data-original-title="Remove">
-                            <i class="now-ui-icons ui-1_simple-remove"></i>
-                          </button>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-              <div class="card-footer ">
-                <hr>
-                <div class="stats">
-                  <i class="now-ui-icons loader_refresh spin"></i> Updated 3 minutes ago
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-6">
+          <div class="col-md-12">
             <div class="card">
               <div class="card-header">
-                <h5 class="card-category">All Persons List</h5>
-                <h4 class="card-title"> Employees Stats</h4>
+                <h4 class="card-title"> Simple Table</h4>
               </div>
               <div class="card-body">
                 <div class="table-responsive">
@@ -334,6 +223,20 @@
                       </tr>
                       <tr>
                         <td>
+                          Philip Chaney
+                        </td>
+                        <td>
+                          Korea, South
+                        </td>
+                        <td>
+                          Overland Park
+                        </td>
+                        <td class="text-right">
+                          $38,735
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
                           Doris Greene
                         </td>
                         <td>
@@ -358,6 +261,148 @@
                         </td>
                         <td class="text-right">
                           $78,615
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          Jon Porter
+                        </td>
+                        <td>
+                          Portugal
+                        </td>
+                        <td>
+                          Gloucester
+                        </td>
+                        <td class="text-right">
+                          $98,615
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="card card-plain">
+              <div class="card-header">
+                <h4 class="card-title"> Table on Plain Background</h4>
+                <p class="category"> Here is a subtitle for this table</p>
+              </div>
+              <div class="card-body">
+                <div class="table-responsive">
+                  <table class="table">
+                    <thead class=" text-primary">
+                      <th>
+                        Name
+                      </th>
+                      <th>
+                        Country
+                      </th>
+                      <th>
+                        City
+                      </th>
+                      <th class="text-right">
+                        Salary
+                      </th>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>
+                          Dakota Rice
+                        </td>
+                        <td>
+                          Niger
+                        </td>
+                        <td>
+                          Oud-Turnhout
+                        </td>
+                        <td class="text-right">
+                          $36,738
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          Minerva Hooper
+                        </td>
+                        <td>
+                          Curaçao
+                        </td>
+                        <td>
+                          Sinaai-Waas
+                        </td>
+                        <td class="text-right">
+                          $23,789
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          Sage Rodriguez
+                        </td>
+                        <td>
+                          Netherlands
+                        </td>
+                        <td>
+                          Baileux
+                        </td>
+                        <td class="text-right">
+                          $56,142
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          Philip Chaney
+                        </td>
+                        <td>
+                          Korea, South
+                        </td>
+                        <td>
+                          Overland Park
+                        </td>
+                        <td class="text-right">
+                          $38,735
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          Doris Greene
+                        </td>
+                        <td>
+                          Malawi
+                        </td>
+                        <td>
+                          Feldkirchen in Kärnten
+                        </td>
+                        <td class="text-right">
+                          $63,542
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          Mason Porter
+                        </td>
+                        <td>
+                          Chile
+                        </td>
+                        <td>
+                          Gloucester
+                        </td>
+                        <td class="text-right">
+                          $78,615
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          Jon Porter
+                        </td>
+                        <td>
+                          Portugal
+                        </td>
+                        <td>
+                          Gloucester
+                        </td>
+                        <td class="text-right">
+                          $98,615
                         </td>
                       </tr>
                     </tbody>
@@ -401,29 +446,21 @@
       </footer>
     </div>
   </div>
-{% endblock %}
+  <!--   Core JS Files   -->
+  <script src="../assets/js/core/jquery.min.js"></script>
+  <script src="../assets/js/core/popper.min.js"></script>
+  <script src="../assets/js/core/bootstrap.min.js"></script>
+  <script src="../assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
+  <!--  Google Maps Plugin    -->
+  <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
+  <!-- Chart JS -->
+  <script src="../assets/js/plugins/chartjs.min.js"></script>
+  <!--  Notifications Plugin    -->
+  <script src="../assets/js/plugins/bootstrap-notify.js"></script>
+  <!-- Control Center for Now Ui Dashboard: parallax effects, scripts for the example pages etc -->
+  <script src="../assets/js/now-ui-dashboard.min.js?v=1.1.0" type="text/javascript"></script>
+  <!-- Now Ui Dashboard DEMO methods, don't include it in your project! -->
+  <script src="../assets/demo/demo.js"></script>
+</body>
 
-{% block bootstrap4_extra_script %}
-<!-- {% bootstrap_javascript jquery='full' %} -->
-<!--   Core JS Files   -->
-<script src="{% static "js/core/jquery.min.js" %}"></script>
-<script src="{% static "js/core/popper.min.js" %}"></script>
-<script src="{% static "js/core/bootstrap.min.js" %}"></script>
-<script src="{% static "js/plugins/perfect-scrollbar.jquery.min.js" %}"></script>
-<!--  Google Maps Plugin    -->
-<!-- Chart JS -->
-<script src="{% static "js/plugins/chartjs.min.js" %}"></script>
-<!--  Notifications Plugin    -->
-<script src="{% static "js/plugins/bootstrap-notify.js" %}"></script>
-<!-- Control Center for Now Ui Dashboard: parallax effects, scripts for the example pages etc -->
-<script src="{% static "js/now-ui-dashboard.min.js" %}" type="text/javascript"></script>
-<!-- Now Ui Dashboard DEMO methods, don't include it in your project! -->
-<script src="{% static "demo/demo.js" %}"></script>
-<script>
-  $(document).ready(function() {
-    // Javascript method's body can be found in assets/js/demos.js
-    demo.initDashboardPageCharts();
-
-  });
-</script>
-{% endblock %}
+</html>

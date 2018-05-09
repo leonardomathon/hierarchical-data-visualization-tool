@@ -13,7 +13,7 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 
 
 # Quick-start development settings - unsuitable for production
@@ -25,7 +25,7 @@ SECRET_KEY = 'cp9vrs2drr0a$!ampw-g+^tiw125hqms&op14mfnt!!ido=x=g'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["dbl.logicbit.nl", "localhost"]
+ALLOWED_HOSTS = ["dbl.logicbit.nl", "localhost", "127.0.0.1"]
 
 
 # Application definition
@@ -84,12 +84,8 @@ WSGI_APPLICATION = 'DBL_vis.wsgi.application'
 # }
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'dblwebtech',
-        'USER': 'root',
-        'PASSWORD': '',
-        'HOST': 'localhost',
-        'PORT': ''
+         'ENGINE': 'django.db.backends.sqlite3',
+         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
 
@@ -129,8 +125,20 @@ USE_L10N = True
 
 USE_TZ = True
 
+# Absolute path to the directory static files should be collected to.
+# Don't put anything in this directory yourself; store your static files
+# in apps' "static/" subdirectories and in STATICFILES_DIRS.
+# Example: "/var/www/example.com/static/"
+STATIC_ROOT = os.path.join(BASE_DIR, '../assets/')
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/2.0/howto/static-files/
+# URL prefix for static files.
+# Example: "http://example.com/static/", "http://static.example.com/"
+STATIC_URL = '/assets/'
 
-STATIC_URL = '/static/'
+# Additional locations of static files
+STATICFILES_DIRS = (
+    # Put strings here, like "/home/html/static" or "C:/www/django/static".
+    # Always use forward slashes, even on Windows.
+    # Don't forget to use absolute paths, not relative paths.
+ os.path.join(BASE_DIR, '../now-ui/assets/'),
+)
