@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'bootstrap4',
     'home',
+    'upload.apps.UploadConfig'
 ]
 
 MIDDLEWARE = [

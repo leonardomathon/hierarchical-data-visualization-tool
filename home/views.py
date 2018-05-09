@@ -9,6 +9,7 @@ from django.views.generic.base import TemplateView
 from django.contrib import messages
 
 from .forms import FilesForm
+from upload.models import Data
 
 
 # http://yuji.wordpress.com/2013/01/30/django-form-field-in-initial-data-requires-a-fieldfile-instance/
@@ -20,12 +21,14 @@ fieldfile = FieldFile(None, FakeField, 'dummy.txt')
 
 
 class HomePageView(TemplateView):
-    template_name = 'demo/home.html'
+    template_name = 'main/index.html'
+    data = Data.objects.all()
 
     def get_context_data(self, **kwargs):
         context = super(HomePageView, self).get_context_data(**kwargs)
-        messages.info(self.request, 'hello http://example.com')
+        context['latest_uploads'] = Data.objects.all()[:5]
         return context
+
 
 class FormWithFilesView(FormView):
     template_name = 'demo/form_with_files.html'

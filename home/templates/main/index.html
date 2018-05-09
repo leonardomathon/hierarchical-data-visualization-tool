@@ -1,0 +1,42 @@
+{% extends 'bootstrap4/bootstrap4.html' %} {% load bootstrap4 %} {% block bootstrap4_extra_head %}
+<!-- Extra links, meta, etc..-->
+<style>
+    body {
+        background-color: #fff;
+    }
+</style>
+{% endblock %} {% block bootstrap4_content %}
+<div class="container">
+    <h1>DBL visualization</h1>
+    <hr>
+    <div class="row" style="margin-top:50px">
+        <div class="col-sm-3" style="border-right: 1px solid #dee2e6;">
+            <h4>Upload dataset</h4>
+            <p>Click <a href="/upload/">here</a> to upload a new dataset</p>
+        </div>
+        <div class="col-sm-9">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Dataname</th>
+                        <th scope="col">Filepath</th>
+                        <th scope="col">Uploaded at</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for data in latest_uploads %}
+                    <tr>
+                        <th scope="row">{{data.id}}</th>
+                        <td>{{data.dataname}}</td>
+                        <td>{{data.file_path}}</td>
+                        <td>@{{data.created_at}}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+<hr>
+</div>
+{% endblock %}

@@ -1,0 +1,122 @@
+{% extends 'bootstrap4/bootstrap4.html' %} {% load bootstrap4 %} {% block bootstrap4_extra_head %}
+<!-- Extra links, meta, etc..-->
+<style>
+    body {
+        background-color: #fff;
+    }
+
+    /* layout.css Style */
+
+    .upload-drop-zone {
+        height: 200px;
+        border-width: 2px;
+        margin-bottom: 20px;
+    }
+
+    /* skin.css Style*/
+
+    .upload-drop-zone {
+        color: #ccc;
+        border-style: dashed;
+        border-color: #ccc;
+        line-height: 200px;
+        text-align: center
+    }
+
+    .upload-drop-zone.drop {
+        color: #222;
+        border-color: #222;
+    }
+</style>
+{% endblock %} {% block bootstrap4_content %}
+<div class="container">
+    <h1>Upload a dataset</h1>
+    <hr>
+    <div class="panel panel-default">
+        <div class="panel-body">
+
+            <!-- Standar Form -->
+            <h4>Select files from your computer</h4>
+            <form action="#" method="post" enctype="multipart/form-data" id="js-upload-form">
+                <div class="form-inline">
+                    <div class="form-group">
+                        <input type="file" name="files[]" id="js-upload-files" multiple>
+                    </div>
+
+                </div>
+
+            
+
+            <!-- Drop Zone -->
+            <div class="upload-drop-zone" id="drop-zone">
+                Just drag and drop files here
+            </div>
+            <button type="submit" style="float:right;" id="js-upload-submit">Upload files</button>
+        </div>
+    </div>
+    <hr>
+    <p>Go
+        <a href="/">
+            < back </a>
+    </p>
+</div>
+{% endblock %} 
+{% block bootstrap4_extra_script %} 
+{% bootstrap_javascript jquery='full' %}
+<script>
+    $('.navbar').affix({
+        offset: {
+            top: $('#header').outerHeight(),
+            bottom: $('#header').outerHeight() - 200
+        }
+    });
+
+    $('#sidemenu').affix({
+        offset: {
+            top: $('#header').outerHeight(),
+            bottom: ($('footer').height() - $('#header').height()) + $('#sidemenu').height()
+        }
+    });
+
+    
+    + function ($) {
+        'use strict';
+
+        // UPLOAD CLASS DEFINITION
+        // ======================
+
+        var dropZone = document.getElementById('drop-zone');
+        var uploadForm = document.getElementById('js-upload-form');
+
+        var startUpload = function (files) {
+            console.log(files)
+        }
+
+        uploadForm.addEventListener('submit', function (e) {
+            var uploadFiles = document.getElementById('js-upload-files').files;
+            e.preventDefault()
+            startUpload(uploadFiles)
+        })
+
+        dropZone.ondrop = function (e) {
+            e.preventDefault();
+            this.className = 'upload-drop-zone';
+
+            startUpload(e.dataTransfer.files)
+        }
+
+        dropZone.ondragover = function () {
+            this.className = 'upload-drop-zone drop';
+            return false;
+        }
+
+        dropZone.ondragleave = function () {
+            this.className = 'upload-drop-zone';
+            return false;
+        }
+
+    }(jQuery);
+</script>
+
+
+{% endblock %}
