@@ -128,7 +128,7 @@ USE_TZ = True
 # Don't put anything in this directory yourself; store your static files
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/var/www/example.com/static/"
-STATIC_ROOT = '/code/assets/'
+STATIC_ROOT = os.path.join(BASE_DIR, '../assets/')
 
 # URL prefix for static files.
 # Example: "http://example.com/static/", "http://static.example.com/"
@@ -139,7 +139,5 @@ STATICFILES_DIRS = (
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
-    'C:/Users/Matthijs Logemann/Downloads/now-ui-dashboard_-html-v1.1.0/now-ui-dashboard -html-v1.1.0/assets',
-    #os.path.join(BASE_DIR, "home/static"),
-
+ os.path.join(BASE_DIR, '../now-ui/assets/'),
 )
