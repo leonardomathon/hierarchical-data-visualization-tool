@@ -15,25 +15,24 @@
             <p>Click <a href="/upload/">here</a> to upload a new dataset</p>
         </div>
         <div class="col-sm-9">
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Dataname</th>
-                        <th scope="col">Filepath</th>
-                        <th scope="col">Uploaded at</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for data in latest_uploads %}
-                    <tr>
-                        <th scope="row">{{data.id}}</th>
-                        <td>{{data.dataname}}</td>
-                        <td>{{data.file_path}}</td>
-                        <td>@{{data.created_at}}</td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
+          <div class="table-responsive">
+            <table class="table">
+              <thead class=" text-primary">
+                <th scope="col">#</th>
+                <th scope="col">Dataname</th>
+                <th scope="col">Filepath</th>
+                <th scope="col">Uploaded at</th>
+              </thead>
+              <tbody>
+                {% for data in latest_uploads %}
+                <tr>
+                    <th scope="row">{{data.id}}</th>
+                    <td>{{data.dataname}}</td>
+                    <td>{{data.file_path}}</td>
+                    <td>@{{data.created_at}}</td>
+                </tr>
+                {% endfor %}
+              </tbody>
             </table>
         </div>
     </div>
