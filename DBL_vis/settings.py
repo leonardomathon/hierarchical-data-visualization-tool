@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'bootstrap4',
     'home',
-    'upload.apps.UploadConfig'
+    'upload',
+    'display'
 ]
 
 MIDDLEWARE = [
@@ -134,6 +135,9 @@ STATIC_ROOT = os.path.join(BASE_DIR, '../assets/')
 # URL prefix for static files.
 # Example: "http://example.com/static/", "http://static.example.com/"
 STATIC_URL = '/assets/'
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'uploads')
+MEDIA_URL = '/uploads/'
 
 # Additional locations of static files
 STATICFILES_DIRS = (

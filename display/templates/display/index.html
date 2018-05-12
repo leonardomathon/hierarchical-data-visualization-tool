@@ -1,0 +1,7 @@
+<h1>Here we display the graphs for dataset</h1>
+
+{% for data in data %}
+<li>
+    <a href="/display/{{ data.id }}">{{ data.dataname }}</a>
+</li>
+{% endfor %}

@@ -21,7 +21,7 @@ fieldfile = FieldFile(None, FakeField, 'dummy.txt')
 
 
 class HomePageView(TemplateView):
-    template_name = 'main/index.html'
+    template_name = 'home/index.html'
     data = Data.objects.all()
 
     def get_context_data(self, **kwargs):
