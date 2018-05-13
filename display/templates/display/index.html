@@ -1,7 +1,49 @@
-<h1>Here we display the graphs for dataset</h1>
+{% extends "base.html" %} {% block content %}
+<div class="panel-header panel-header-lg">
+    <div style="margin-left: 2rem;margin-right: 2rem;color:#fff;">
+        <h1>Dataset library</h1>
+        <p>
+            These are all the uploaded datasets, follow the link to load the visualizations
+        </p>
+    </div>
+</div>
+<div class="content">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card card-chart">
+                <div class="card-header">
+                    <h5 class="card-category">Previously uploaded datasets</h5>
+                    <h4 class="card-title"> Previous Datasets</h4>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead class=" text-primary">
+                                <th scope="col">Dataname</th>
+                                <th scope="col">Filepath</th>
+                                <th scope="col">Uploaded at</th>
+                            </thead>
+                            <tbody>
+                                {% for data in data %}
+                                <tr>
+                                    <td>
+                                        <a href="/display/{{data.id}}">{{data.dataname}}</a>
+                                    </td>
+                                    <td>{{data.file_path.url}}</td>
+                                    <td>{{data.created_at}}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="card-footer">
 
-{% for data in data %}
-<li>
-    <a href="/display/{{ data.id }}">{{ data.dataname }}</a>
-</li>
-{% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+</div>
+{% endblock content %}

@@ -1,9 +1,68 @@
-<h1>Visualizations</h1>
-<hr>
-<h3>This is the place where we show the visualizations for <i>{{ data.dataname }}</i></h3>
-<pre style="background-color: rgb(204, 204, 204)"><code>
-    id = {{ data.id }}
-    dataset_name = {{ data.dataname }}
-    filepath = {{ data.file_path.url }}
-    
-</code></pre>
+{% extends "base.html" %} {% block content %}
+<div class="panel-header panel-header-lg">
+    <div style="margin-left: 2rem;margin-right: 2rem;color:#fff;">
+        <h1>Visualization for <i>{{data.dataname}}</i></h1>
+        <h4>Dataset name:</h4><p>{{data.dataname}}</p>
+    </div>
+</div>
+<div class="content">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card card-chart">
+                <div class="card-header">
+                    <h5 class="card-category">Dataset information</h5>
+                    <h4 class="card-title"> Information</h4>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive" style="overflow: hidden;">
+                        <table class="table" >
+                            <thead class=" text-primary">
+                                <th scope="col">Id</th>
+                                <th scope="col">Dataname</th>
+                                <th scope="col">Filepath</th>
+                                <th scope="col">Uploaded at</th>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>{{data.id}}</td>
+                                    <td>
+                                        <a href="/display/{{data.id}}">{{data.dataname}}</a>
+                                    </td>
+                                    <td>/uploads/{{data.file_path}}</td>
+                                    <td>{{data.created_at}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="card card-chart">
+                <div class="card-header">
+                    <h5 class="card-category">Visualization</h5>
+                    <h4 class="card-title"> Visualization 1</h4>
+                </div>
+                <div class="card-body">
+                    <p>Visualization 1</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="card card-chart">
+                <div class="card-header">
+                    <h5 class="card-category">Visualization</h5>
+                    <h4 class="card-title"> Visualization 2</h4>
+                </div>
+                <div class="card-body">
+                    <p>Visualization 1</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+</div>
+{% endblock content %}
