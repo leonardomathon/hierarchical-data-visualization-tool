@@ -3,7 +3,7 @@ from upload.models import Data
 
 def index(request):
     context = {
-        'data': Data.objects.all()
+        'data': Data.objects.all().order_by('-pk')
     }
     return render(request, 'display/index.html', context)
 

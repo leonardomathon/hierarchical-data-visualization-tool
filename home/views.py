@@ -26,7 +26,7 @@ class HomePageView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(HomePageView, self).get_context_data(**kwargs)
-        context['latest_uploads'] = Data.objects.all()[:5]
+        context['latest_uploads'] = Data.objects.all().order_by('-pk')[:5]
         return context
 
 
