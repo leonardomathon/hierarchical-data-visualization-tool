@@ -11,15 +11,6 @@ from django.contrib import messages
 from .forms import FilesForm
 from upload.models import Data
 
-
-# http://yuji.wordpress.com/2013/01/30/django-form-field-in-initial-data-requires-a-fieldfile-instance/
-class FakeField(object):
-    storage = default_storage
-
-
-fieldfile = FieldFile(None, FakeField, 'dummy.txt')
-
-
 class HomePageView(TemplateView):
     template_name = 'home/index.html'
     data = Data.objects.all()
