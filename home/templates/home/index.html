@@ -23,34 +23,71 @@
 <div class="content">
   <div class="row">
     <div class="col-lg-4">
-      <div class="card card-chart">
+      <div class="card card-chart" style="height:350px;">
         <div class="card-header">
           <h5 class="card-category">Upload a new dataset</h5>
           <h4 class="card-title"> Upload Dataset</h4>
         </div>
         <div class="card-body">
-          <p>Click
-            <a href="/upload">here</a> to upload a new dataset</p>
-        </div>
-        <div class="card-footer">
+          <form action="/upload/" method="post" class="form-horizontal" enctype="multipart/form-data">
+              {% csrf_token %}
+              <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <span class="text-danger small"></span>
+                            </div>
+                        </div>
 
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <span class="text-danger small"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                                <label>Data name</label>
+                                <input type="text" class="form-control" name="dataname" maxlength="250" required="" id="id_dataname">
+                            </div>
+                            <div class="form-group">
+                                    <label>Datafile</label>
+                        <div class="input-group no-border">
+                          <label class="form-control">
+                          <label for="id_file_path" id="upload-file-info">Select file...</label> <input type="file" name="file_path" required="" id="id_file_path" hidden onchange="$('#upload-file-info').html(this.files[0].name)"></input>
+                          </label>
+                          <div class="input-group-append">
+                                <div class="input-group-text">
+                                    <i class="now-ui-icons files_paper"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                        <div class="form-group pull-right">
+                            <div class="col-sm-offset-2">
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </div>
+                        </div>
+          </form>
         </div>
+        <!-- <div class="card-footer">
+
+        </div> -->
       </div>
     </div>
     <div class="col-lg-8 col-md-6">
-      <div class="card card-chart">
+      <div class="card card-chart" style="height:350px;">
         <div class="card-header">
           <h5 class="card-category">Previously uploaded datasets</h5>
           <h4 class="card-title"> Previous Datasets</h4>
         </div>
         <div class="card-body">
-          <div class="table-responsive">
+          <div class="table-responsive" style="height:250px;">
             <table class="table">
               <thead class=" text-primary">
-                <th scope="col">#</th>
-                <th scope="col">Dataname</th>
-                <th scope="col">Filepath</th>
-                <th scope="col">Uploaded at</th>
+                <tr>
+                <th>#</th>
+                <th>Dataname</th>
+                <th>Filepath</th>
+                <th>Uploaded at</th>
+              </tr>
               </thead>
               <tbody>
                 {% for data in latest_uploads %}
