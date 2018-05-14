@@ -22,9 +22,6 @@ def read(request, data_id):
     file = open(settings.BASE_DIR + data.file_path.url, "r")
     for line in file:
         datafile.append(line)
-    if len(datafile) > 1:
-        datafile.clear()
-        datafile.append('Sorry, this dataset is too big to be displayed...')
     context = {
         'file': datafile
     }
@@ -36,9 +33,6 @@ def returnJson(request, data_id):
     file = open(settings.BASE_DIR + data.file_path.url, "r")
     for line in file:
             datafile.append(line)
-    if len(datafile) > 1:
-        datafile.clear()
-        datafile.append('Sorry, this dataset is too big to be displayed...')
     context = {
             'file': datafile
         }
