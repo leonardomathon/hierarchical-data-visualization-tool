@@ -3,6 +3,7 @@ from django.urls import reverse
 from .validator import validate_file_extension
 from django.core.validators import RegexValidator
 
+
 # Validator for regex
 alphanumeric = RegexValidator(
     r'^[0-9a-zA-Z]+$', 'Only alphanumeric characters are allowed.')
@@ -25,6 +26,8 @@ class Data(models.Model):
 
     def __str__(self):
         return self.dataname
+        
     class Meta:
         verbose_name_plural = "Data"
+        
 
