@@ -1,12 +1,14 @@
 from django.shortcuts import render, get_object_or_404
 from upload.models import Data, user_directory_path
 from django.conf import settings
-import json
 from django.http import HttpResponse
+
 from ete3 import Tree
+
+import os.path
 import sys
 import random
-import os.path
+import json
 
 
 def index(request):

@@ -1,0 +1,57 @@
+{% extends "base.html" %} {% block content %}
+<div class="panel-header panel-header-lg" style="height: 300px;">
+    <div style="margin-left: 2rem;margin-right: 2rem;color:#fff;">
+        <h1>Dataset library</h1>
+        <p>
+            These are all the uploaded datasets, follow the link to load the visualizations
+        </p>
+    </div>
+</div>
+<div class="content">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card card-chart">
+                <div class="card-header">
+                    <h5 class="card-category">Previously uploaded datasets</h5>
+                    <h4 class="card-title">All Datasets</h4>
+                    <hr>
+                    <form action="" method="post">
+                        <div class="form-group">
+                            <label for="dataname">Search for a dataset</label>
+                            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">                        </div>
+                    </form>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead class=" text-primary">
+                                <th scope="col">Dataname</th>
+                                <th scope="col">Filepath</th>
+                                <th scope="col">Uploaded at</th>
+                            </thead>
+                            <tbody>
+                                {% for data in data %}
+                                <tr>
+                                    <td>
+                                        <a href="/display/{{data.id}}">{{data.dataname}}</a>
+                                    </td>
+                                    <td>{{data.file_path.url}}</td>
+                                    <td>{{data.created_at}}</td>
+                                    <td><a href="{{data.id}}/read">Read file</a></td>
+                                    <td><a href="{{data.id}}/json">Get JSON</a></td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="card-footer">
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+</div>
+{% endblock content %}

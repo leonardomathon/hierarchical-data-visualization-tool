@@ -23,7 +23,8 @@ urlpatterns = [
     path('', HomePageView.as_view(), name='home'),
     path('admin/', admin.site.urls),
     path('upload/', include('upload.urls')),
-    path('display/', include('display.urls'))
+    path('display/', include('display.urls')),
+    path('search/', include('search.urls'))
 ]
 
 if settings.DEBUG:
