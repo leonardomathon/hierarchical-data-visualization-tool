@@ -4,6 +4,15 @@
 <div class="panel-header panel-header-lg">
   <div style="margin-left: 2rem;margin-right: 2rem;color:#fff;">
     <h1>Welcome to our DBL Visualization!</h1>
+     {% for message in messages %}
+      {% if message %}
+      {% autoescape off %}
+      <div class="alert alert-danger">
+        <strong>Ooops!</strong> {{message}}
+      </div>
+      {% endautoescape %}
+      {% endif %}
+    {% endfor %}
     <p>
       Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas eu turpis varius, pretium mi vel, posuere nisi. Vestibulum
       rhoncus sagittis risus et pulvinar. Quisque pharetra eleifend lacus vitae mollis. Curabitur dui leo, vulputate et dui
