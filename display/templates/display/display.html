@@ -213,6 +213,8 @@ treeJSON = d3.json("json", function(error, treeData) {
     // Define the zoom function for the zoomable tree
 
     function zoom() {
+        d3.event.sourceEvent.stopPropagation();
+        d3.event.sourceEvent.preventDefault();
         svgGroup.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
     }
 
