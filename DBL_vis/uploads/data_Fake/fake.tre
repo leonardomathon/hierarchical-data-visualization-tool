@@ -1,0 +1,25 @@
+import sys
+from ete3 import Tree
+import random
+
+def main():
+    t = Tree('Data/ancestor.tre', format=0)
+    f= open("tree.json","w+")
+    f.write(str(get_json(t)).replace("'", '"'))
+
+def get_json(node):
+    node.name = node.name.replace("'", '')
+        
+    json = { "name": node.name, 
+             "type": "node" if node.children else "leaf",
+             "branch_length": str(node.dist),
+             }
+    if node.children:
+        json["children"] = []
+        for ch in node.children:
+            json["children"].append(get_json(ch))
+    return json
+    
+
+if __name__ == '__main__':
+    main()
