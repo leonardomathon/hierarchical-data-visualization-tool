@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="panel-header panel-header-lg">
+<div class="panel-header panel-header-lg" style="height: 300px;">
   <div style="margin-left: 2rem;margin-right: 2rem;color:#fff;">
     <h1>Welcome to our DBL Visualization!</h1>
      {% for message in messages %}
@@ -14,18 +14,8 @@
       {% endif %}
     {% endfor %}
     <p>
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas eu turpis varius, pretium mi vel, posuere nisi. Vestibulum
-      rhoncus sagittis risus et pulvinar. Quisque pharetra eleifend lacus vitae mollis. Curabitur dui leo, vulputate et dui
-      id, tincidunt facilisis risus. Proin dolor diam, vulputate sit amet purus in, pharetra dictum sapien. Pellentesque
-      commodo orci et vulputate egestas. Ut condimentum placerat risus, non pulvinar eros aliquet a. Praesent sed porta justo.
-      Vestibulum volutpat convallis nisl, id consectetur neque mattis eu. Integer ultrices, nisi vitae interdum bibendum,
-      erat nisi condimentum justo, et scelerisque augue turpis nec augue. Suspendisse vitae diam neque. Proin metus urna,
-      accumsan ut tempor et, tincidunt ut enim. Cras vitae nibh et augue fringilla hendrerit nec at nisi. Duis sit amet imperdiet
-      magna, ut varius neque. Suspendisse maximus nec orci vel semper. Praesent pulvinar pretium eros vel pretium. Integer
-      dignissim condimentum fermentum. In hac habitasse platea dictumst. Morbi scelerisque consectetur luctus. Suspendisse
-      potenti. Integer et varius augue. Duis nec nibh maximus, rutrum odio id, auctor nibh. Nulla est est, facilisis sit
-      amet tellus sed, lacinia ultrices nunc. In consectetur ut diam nec finibus. Quisque ultricies quam sed est dignissim
-      hendrerit. Nullam ante sem, congue nec odio semper, laoreet condimentum lorem.
+      Welcome to our DBL project! <br>
+      <a href="/upload">Upload a dataset</a> or use the <a href="/search">search</a> function to search for a dataset.
     </p>
   </div>
 </div>

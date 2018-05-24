@@ -29,7 +29,6 @@ def display(request, data_id):
     else:
         # Return redirect to home page with message
         messages.add_message(request, messages.INFO, "You tried to upload a invalid tree. Make sure the file format corresponds with the <a href='https://en.wikipedia.org/wiki/Newick_format' style='color:white;'><u>example</u></a>")
-
         # Remove uploaded file from database
         data = Data.objects.get(pk=data_id)
         data.delete()
