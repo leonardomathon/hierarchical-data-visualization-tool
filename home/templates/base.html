@@ -41,13 +41,13 @@
                         <p>Display</p>
                     </a>
                 </li>
-                <!-- <li>
-                    <a href="./notifications.html">
+                <li class="{% if request.path == '/search/' %}active{% endif %}">
+                    <a href="/search">
                         <i class="now-ui-icons ui-1_bell-53"></i>
-                        <p>Notifications</p>
+                        <p>Search</p>
                     </a>
                 </li>
-                <li>
+                <!-- <li>
                     <a href="./user.html">
                         <i class="now-ui-icons users_single-02"></i>
                         <p>User Profile</p>
@@ -96,7 +96,7 @@
                 <div class="collapse navbar-collapse justify-content-end" id="navigation">
                     <form>
                         <div class="input-group no-border">
-                            <input type="text" value="" class="form-control" placeholder="Search...">
+<input type="text" value="" onkeyup="searchData()" class="form-control"  id="datasetname_main" placeholder="Search...">
                             <div class="input-group-append">
                                 <div class="input-group-text">
                                     <i class="now-ui-icons ui-1_zoom-bold"></i>
@@ -162,11 +162,38 @@
 <!-- Now Ui Dashboard DEMO methods, don't include it in your project! -->
 <script src="{% static "demo/demo.js" %}"></script>
 <script>
-    $(document).ready(function () {
-        // Javascript method's body can be found in assets/js/demos.js
-        demo.initDashboardPageCharts();
+    function searchData() {
+        var input, filter, filter2, table, tbody, tr, td, a, i;
+        if ($('#datasetname').length > 0) {
+            input = document.getElementById("datasetname");
+            filter = input.value.toUpperCase();
+        }
+        inputmain = document.getElementById("datasetname_main");
+        filter2 = inputmain.value.toUpperCase();
+        table = document.getElementById("datatable");
+        tbody = document.getElementById("databody");
+        tr = tbody.getElementsByTagName("tr");
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[0];
+            a = td.getElementsByTagName("a")[0];
+            if (input === document.activeElement){
+                if ((a.innerHTML.toUpperCase().indexOf(filter) > -1)) { 
+                    tr[i].style.display = ""; 
+                } else { 
+                    tr[i].style.display = "none";
+                }
+            }
+            if (inputmain === document.activeElement) {
+                if ((a.innerHTML.toUpperCase().indexOf(filter2) > -1)) { 
+                    tr[i].style.display = ""; 
+                } else { 
+                    tr[i].style.display = "none";
+                }
+            }
 
-    });
+           
+        }
+    }
 </script>
 {% block content_scripts %}  {% endblock content_scripts %}
 

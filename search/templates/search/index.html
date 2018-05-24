@@ -14,22 +14,24 @@
                 <div class="card-header">
                     <h5 class="card-category">Previously uploaded datasets</h5>
                     <h4 class="card-title">All Datasets</h4>
-                    <hr>
-                    <form action="" method="post">
+                    <div style="margin-top:20px;">
                         <div class="form-group">
                             <label for="dataname">Search for a dataset</label>
-                            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">                        </div>
-                    </form>
+                            <input type="text" onkeyup="searchData()" autocomplete="off" name="q" class="form-control" id="datasetname" aria-describedby="datasetname"
+                                placeholder="Enter dataset name">
+                        </div>
+                    </div>
+                    <hr style="margin-top: 50px;">
                 </div>
-                <div class="card-body">
+                <div class="card-body" id="datacard">
                     <div class="table-responsive">
-                        <table class="table">
+                        <table class="table" id="datatable">
                             <thead class=" text-primary">
                                 <th scope="col">Dataname</th>
                                 <th scope="col">Filepath</th>
                                 <th scope="col">Uploaded at</th>
                             </thead>
-                            <tbody>
+                            <tbody id="databody">
                                 {% for data in data %}
                                 <tr>
                                     <td>
@@ -37,8 +39,6 @@
                                     </td>
                                     <td>{{data.file_path.url}}</td>
                                     <td>{{data.created_at}}</td>
-                                    <td><a href="{{data.id}}/read">Read file</a></td>
-                                    <td><a href="{{data.id}}/json">Get JSON</a></td>
                                 </tr>
                                 {% endfor %}
                             </tbody>
@@ -54,4 +54,6 @@
 
 </div>
 </div>
-{% endblock content %}
+{% endblock content %} {% block content_scripts%}
+
+{% endblock %}
