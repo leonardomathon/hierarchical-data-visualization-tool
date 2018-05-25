@@ -129,7 +129,7 @@
 <script src="{% static "js/core/popper.min.js" %}"></script>
 <script src="{% static "js/core/bootstrap.min.js" %}"></script>
 <script src="{% static "js/plugins/perfect-scrollbar.jquery.min.js" %}"></script>
-<script src="https://d3js.org/d3.v5.min.js"></script>
+<script src="https://d3js.org/d3.v3.min.js"></script>
 <!--  Google Maps Plugin    -->
 <!-- Chart JS -->
 <script src="{% static "js/plugins/chartjs.min.js" %}"></script>
@@ -155,21 +155,21 @@
             td = tr[i].getElementsByTagName("td")[0];
             a = td.getElementsByTagName("a")[0];
             if (input === document.activeElement){
-                if ((a.innerHTML.toUpperCase().indexOf(filter) > -1)) { 
-                    tr[i].style.display = ""; 
-                } else { 
+                if ((a.innerHTML.toUpperCase().indexOf(filter) > -1)) {
+                    tr[i].style.display = "";
+                } else {
                     tr[i].style.display = "none";
                 }
             }
             if (inputmain === document.activeElement) {
-                if ((a.innerHTML.toUpperCase().indexOf(filter2) > -1)) { 
-                    tr[i].style.display = ""; 
-                } else { 
+                if ((a.innerHTML.toUpperCase().indexOf(filter2) > -1)) {
+                    tr[i].style.display = "";
+                } else {
                     tr[i].style.display = "none";
                 }
             }
 
-           
+
         }
     }
 </script>
