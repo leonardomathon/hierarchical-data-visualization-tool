@@ -127,14 +127,6 @@
 {% endblock content %} {% block content_scripts %}
 <script src="https://d3js.org/d3-selection.v1.js"></script>
 <script>
-    // jsonDATA = d3.json("json").then( function(error, data) {
-    //     console.log(error)
-    //     console.log(data)
-    // });
-</script>
-
-
-<script>
  jsonDATA = d3.json("json").then( function(data) {
      var data = this.data;
     // var d3 = window.d3v5
@@ -271,7 +263,7 @@
     }
     window.onload = chart();
 }, function(error) {} );
-    $("#vis2 > svg").bind("wheel mousewheel", function (e) {
+    $("#tree-container > svg").bind("wheel mousewheel", function (e) {
         e.preventDefault()
     });
 </script>

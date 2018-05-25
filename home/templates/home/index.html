@@ -1,9 +1,9 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="panel-header panel-header-lg" style="height: 300px;">
+<div class="panel-header panel-header-lg" style="height: 350px;">
   <div style="margin-left: 2rem;margin-right: 2rem;color:#fff;">
-    <h1>Welcome to our DBL Visualization!</h1>
+  <h1 class="d-none d-md-block d-lg-block">Welcome to our DBL Visualization!</h1>
      {% for message in messages %}
       {% if message %}
       {% autoescape off %}
@@ -16,8 +16,12 @@
     {% if messages %}
     <br>
     {% else %}
-      <p style="margin-bottom: 20px;">
+      <p class="d-none d-md-block d-lg-block">
         Welcome to our DBL project! <br>
+        Our website is used for data visualization. We have a fully working upload tool, which works even with bigger datasets. On upload, the newick file gets parsed and is visualized. It has one fully functioning visualisation and a search tool for finding a previously uploaded dataset. This website backend is built with Django which is a python MVT framework. The visualisations are built using the javascript library D3.js.
+      </p>
+      <hr style="border-top: 1px solid rgb(255, 255, 255, 0.27);">
+      <p>
         <a href="/upload">Upload a dataset</a> or use the <a href="/search">search</a> function to search for a dataset.
       </p>
     {% endif %}

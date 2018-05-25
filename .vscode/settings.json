@@ -2,7 +2,6 @@
   "python.pythonPath": "${workspaceFolder}\\DBL_env\\Scripts\\python.exe",
   "files.exclude": {
     "__error": "Not found",
-    "assets": true,
     "DBL_env": true,
     "now-ui": true
   },
