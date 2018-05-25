@@ -6,18 +6,14 @@
 <!-- CSS Files -->
 <link href="{% static "css/bootstrap.min.css" %}" rel="stylesheet" />
 <link href="{% static "css/now-ui-dashboard.css" %}" rel="stylesheet" />
-<!-- CSS Just for demo purpose, don't include it in your project -->
 <link href="{% static "demo/demo.css" %}" rel="stylesheet" /> {% endblock %} {% block bootstrap4_content %}
 <div class="wrapper ">
     <div class="sidebar" data-color="orange">
-        <!--
-        Tip 1: You can change the color of the sidebar using: data-color="blue | green | orange | red | yellow"
-    -->
         <div class="logo">
             <a href="" class="simple-text logo-mini">
                 DBL
             </a>
-            <a href="" class="simple-text logo-normal">
+            <a href="/" class="simple-text logo-normal">
                 Visualization Group 8
             </a>
         </div>
@@ -35,7 +31,7 @@
                         <p>Upload</p>
                     </a>
                 </li>
-                <li class="{% if request.path == '/display/' %}active{% endif %}">
+                <li class="{% if '/display/' in request.path %}active{% endif %}">
                     <a href="/display">
                         <i class="now-ui-icons location_map-big"></i>
                         <p>Display</p>
@@ -47,24 +43,6 @@
                         <p>Search</p>
                     </a>
                 </li>
-                <!-- <li>
-                    <a href="./user.html">
-                        <i class="now-ui-icons users_single-02"></i>
-                        <p>User Profile</p>
-                    </a>
-                </li>
-                <li>
-                    <a href="./tables.html">
-                        <i class="now-ui-icons design_bullet-list-67"></i>
-                        <p>Table List</p>
-                    </a>
-                </li>
-                <li>
-                    <a href="./typography.html">
-                        <i class="now-ui-icons text_caps-small"></i>
-                        <p>Typography</p>
-                    </a>
-                </li> -->
                 <li class="tue-logo">
                     <div style="margin-right: auto;margin-left: auto; margin-bottom:0; width: 80%; text-align:center;">
                         <img src="{% static "img/Eindhoven_University_of_Technology_logo.svg" %}" style="width:100%;height:auto;"></img>
@@ -96,7 +74,7 @@
                 <div class="collapse navbar-collapse justify-content-end" id="navigation">
                     <form>
                         <div class="input-group no-border">
-<input type="text" value="" onkeyup="searchData()" class="form-control"  id="datasetname_main" placeholder="Search...">
+                            <input type="text" value="" onkeyup="searchData()" class="form-control"  id="datasetname_main" placeholder="Search..." autocomplete="off">
                             <div class="input-group-append">
                                 <div class="input-group-text">
                                     <i class="now-ui-icons ui-1_zoom-bold"></i>
@@ -104,7 +82,7 @@
                             </div>
                         </div>
                     </form>
-                    <ul class="navbar-nav">
+                    <!-- <ul class="navbar-nav">
                         <li class="nav-item">
                             <a class="nav-link" href="#pablo">
                                 <i class="now-ui-icons media-2_sound-wave"></i>
@@ -135,7 +113,7 @@
                                 </p>
                             </a>
                         </li>
-                    </ul>
+                    </ul> -->
                 </div>
             </div>
         </nav>

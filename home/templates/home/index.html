@@ -13,10 +13,14 @@
       {% endautoescape %}
       {% endif %}
     {% endfor %}
-    <p>
-      Welcome to our DBL project! <br>
-      <a href="/upload">Upload a dataset</a> or use the <a href="/search">search</a> function to search for a dataset.
-    </p>
+    {% if messages %}
+    <br>
+    {% else %}
+      <p style="margin-bottom: 20px;">
+        Welcome to our DBL project! <br>
+        <a href="/upload">Upload a dataset</a> or use the <a href="/search">search</a> function to search for a dataset.
+      </p>
+    {% endif %}
   </div>
 </div>
 <div class="content">
@@ -43,7 +47,7 @@
                         </div>
                         <div class="form-group">
                                 <label>Data name</label>
-                                <input type="text" class="form-control" name="dataname" maxlength="250" required="" id="id_dataname">
+                                <input type="text" class="form-control" name="dataname" maxlength="250" required="" id="id_dataname" autocomplete="off">
                             </div>
                             <div class="form-group">
                                     <label>Datafile</label>
