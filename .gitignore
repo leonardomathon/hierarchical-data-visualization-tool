@@ -103,3 +103,4 @@ venv.bak/
 .mypy_cache/
 DBL_vis/db.sqlite3
 DBL_vis/uploads/
+db.sqlite3
