@@ -110,7 +110,10 @@
                 </div>
                 <div class="card-body">
                     <p>Visualization 2</p>
-                        <div id="vis2"></div>
+                        <div id="vis2">
+                            <script src="https://d3js.org/d3.v4.min.js"></script>
+                            <script src="{% static "display/js/app.js" %}"></script>
+                        </div>
                     <style>
                         path {
                             stroke: #fff;
@@ -125,6 +128,7 @@
 </div>
 </div>
 {% endblock content %} {% block content_scripts %}
+<<<<<<< HEAD
 <script src="https://d3js.org/d3-selection.v1.js"></script>
 <script>
  jsonDATA = d3.json("json").then( function(data) {
@@ -267,4 +271,7 @@
         e.preventDefault()
     });
 </script>
+=======
+
+>>>>>>> Vis2 working on site
 {% endblock content_scripts %}

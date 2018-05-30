@@ -1,10 +1,11 @@
 (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
 var d3 = require("./d3v5.js")
-var data = require("json")
+console.log(d3)
+var data = require("./data/tree3.json")
 var color = d3.scaleOrdinal().range(d3.quantize(d3.interpolateRainbow, data.children.length + 1));
 
 var format = d3.format(",d");
-var width = 500;
+var width = document.getElementById("vis2").offsetWidth-100;
 var height = (width * 700)/960;
 var radius = width / 6;
 
@@ -37,7 +38,7 @@ var chart = function chart()  {
         return d.current = d;
     });
 
-    var svg = d3.select("#vis2").append("svg:svg")
+    var svg = d3.select("#vis2").append("svg")
         .style("width", width)
         .style("height", 500)
         .style("font", "10px sans-serif");
