@@ -46,7 +46,7 @@ console.log(url)
         });
         var svg = d3.select("#vis2").append("svg:svg")
             .style("width", width)
-            .style("height", 500)
+            .style("height", height)
             .style("font", "10px sans-serif")
             .style("display", "block")
             .style("margin", "auto");
