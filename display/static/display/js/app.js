@@ -8,11 +8,11 @@ console.log(url)
     // var d3 = window.d3v5
     var color = d3.scaleOrdinal().range(d3.quantize(d3.interpolateRainbow, data.children.length + 1));
     var format = d3.format(",d");
-    if (document.getElementById("vis2").offsetWidth < 700) {
-            var width = ("width", 200);
-    } else {
-        var width = 500;
-    }
+//     if (document.getElementById("vis2").offsetWidth < 700) {
+//             var width = ("width", 200);
+//     } else {
+        var width = document.getElementById("vis2").offsetWidth;
+//     }
     var height = (width * 700)/960;
     var radius = width / 6;
     var arc = d3.arc().startAngle(function (d) {
