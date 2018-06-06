@@ -28,7 +28,12 @@ console.log(url)
     });
     var partition = function partition(data) {
         var root = d3.hierarchy(data).sum(function (d) {
-            return d.branch_length;
+            if(d.type == "leaf" || (typeof d.type == 'undefined')) {
+                return d.branch_length;
+            }
+            else {
+                return 0.0;
+            }
         }).sort(function (a, b) {
             return b.value - a.value;
         });
@@ -118,8 +123,8 @@ console.log(url)
         function labelTransform(d) {
             var x = (d.x0 + d.x1) / 2 * 180 / Math.PI;
             var y = (d.y0 + d.y1) / 2 * radius;
-            if (x == 180) {
-                return "rotate(" + (0) + ") translate(" + (0) + ", 40)";
+            if(x == 180) {
+                return "rotate(" + (0) + ") translate(" + (0) + ", " + (y) + ")";
             } else {
                 return "rotate(" + (x - 90) + ") translate(" + y + ",0) rotate(" + (x < 180 ? 0 : 180) + ")";
             }
