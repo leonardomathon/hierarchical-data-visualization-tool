@@ -11,9 +11,9 @@ console.log(url)
 //     if (document.getElementById("vis2").offsetWidth < 700) {
 //             var width = ("width", 200);
 //     } else {
-        var width = document.getElementById("vis2").offsetWidth;
+        var width = document.getElementById("vis2").offsetWidth*0.8;
 //     }
-    var height = (width * 700)/960;
+    var height = width;
     var radius = width / 6;
     var arc = d3.arc().startAngle(function (d) {
         return d.x0;
