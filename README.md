@@ -17,31 +17,48 @@ The next step is to install all the requirements. Navigate using using your term
 Next run the command ```python manage.py migrate``` to setup the database. Then run ```python manage.py runserver``` to start the local server. You are now able to visit the website using ```localhost:8000```.
 
 ## File structure ##
+### Project root folder ###
 ```
-+-- DBL_env
++-- DBL_env             \\ Virtual environment
 |
 +-- DBL_vis
 |   |
-|   +-- Uploads
-|      |
-|      +-- Uploads        \\ Storage for all the uploaded datasets
-|      +-- settings.py    \\ Projects main settings file
-|      +-- urls.py        \\ All the urls for our application
-|      +-- wsgi.py        \\ WSGI app needed for Django's webserver
-|      +-- db.sqlite3     \\ Database where we store our data
+|   +-- Uploads         \\ Storage for all the uploaded datasets
+|   +-- settings.py     \\ Projects main settings file
+|   +-- urls.py         \\ All the urls for our application
+|   +-- wsgi.py         \\ WSGI app needed for Django's webserver
+|   +-- db.sqlite3      \\ Database where we store our data
 |
-+-- Assets                \\ Main folder for all the assets like CSS and JS
++-- Assets              \\ Main folder for all the assets like CSS and JS
 |   
-+-- Display               \\ Display App
++-- Display             \\ Display App
 | 
-+-- Home                  \\ Main app
++-- Home                \\ Main app
 |
-+-- Search                \\ Search app
++-- Search              \\ Search app
 |
-+-- Upload                \\ Upload app
++-- Upload              \\ Upload app
 
 ```
 
+### App folder ###
+```
++-- App_name
+|   |
+|   +-- Migrations      \\ Folder where Django keeps track of migrations 
+|   +-- static
+|     |
+|     +-- App_name      \\ Folder for app specific assets
+|   +-- templates
+|     |
+|     +-- App_name      \\ Folder for app specific templates extended from base.html
+|   +-- __init__.py
+|   +-- admin.py         
+|   +-- models.py       \\ File to register model if necessary
+|   +-- tests.py  
+|   +-- urls.py         \\ Here, all the app specific urls live
+|   +-- views.py        \\ File that runs certain methods / function when user visist an url
+```
 ## App structure ##
 | Functionality | Url |
 | ------------- | ------------- |
