@@ -56,7 +56,7 @@ def get_json(node):
 
     #If node has no name, assign random name
     if node.name == "":
-        node.name = random.randint(0, 10000)
+        node.name = "junction_" + random.randint(0, 100000)
 
     # JSON format
     json = {"name": node.name,
