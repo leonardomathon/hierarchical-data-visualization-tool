@@ -11,8 +11,10 @@ These instruction will help you get this project up and running.
 This project uses the Django web framework. To install Django globally on your machine use ```pip install django```. Next up you need to get the other python packages we used. We recommend using a Python virtualenvironment to protect the global python packages already installed on your machine. To install python virtualenv use the command ```pip install virtualenv```.
 
 ### Run project ###
- Pull the file from the github repository or download the sources files from Canvas. Next open up a command prompt en browse into the virtualenivornment we have include into our project using ```cd DBL_env/Scripts```, then activate the virtualenvironment using ```activate``` on Windows, or ```source activate``` on Linux.
-The next step is to install all the requirements. 
+ Pull the file from the github repository or download the sources files from Canvas. Next open up a commandprompt or a terminal en browse into the virtualenivornment we have include into our project using ```cd DBL_env/Scripts```, then activate the virtualenvironment using ```activate``` on Windows, or ```source activate``` on Linux.
+The next step is to install all the requirements. Navigate using using your terminal to the root of the projects then run ```pip isntall -r requirements.txt```. This will install all the required packages for the project.
+Next run the command ```python manage.py migrate``` to setup the database. Then run ```python manage.py runserver``` to start the local server. You are now able to visit the website using ```localhost:8000```.
+
 ## App structure ##
 | Functionality | Url |
 | ------------- | ------------- |
