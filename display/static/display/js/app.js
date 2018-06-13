@@ -247,21 +247,7 @@ var height = width*(1/0.9)+6;
         }).attr("transform", function (d) {
             return labelTransform(d.current);
         }).text(function (d) {
-            if(d.data.name.length < 16) {
-				return d.data.name;
-			}
-			else if (d.data.name.indexOf(' ') >= 0) {
-				var fields = d.data.name.split(' ');
-				if (fields[0].length < 13) {
-					return fields[0] + "...";
-				}
-				else {
-					return d.data.name.substr(0, 12) + "...";
-				}
-			}
-			else {
-				return d.data.name.substr(0, 12) + "...";
-			}
+            return d.data.name;
         });
         var parent = g.append("circle").datum(root).attr("r", radius).attr("fill", "none").attr("pointer-events", "all").on("click", clicked);
         function clicked(p) {
