@@ -2,8 +2,8 @@
 var url = window.location.href + "json";
 console.log(url)
  jsonDATA = d3.json(url, function(error, data) {
-   var width = document.getElementById("vis2").offsetWidth*0.8;
-   var height = width;
+   var width = document.getElementById("vis2").offsetWidth;
+   var height = width*0.9;
 
    // Set the dimensions and margins of the diagram
        var margin = { top: 0, right: 0, bottom: 0, left: 0 };
@@ -14,7 +14,8 @@ console.log(url)
        // append the svg object to the body of the page
        // appends a 'group' element to 'svg'
        // moves the 'group' element to the top left margin
-       var svg = d3.select("#tree-container").append("svg").attr("width", width).attr("height", height).append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+       var svg = d3.select("#tree-container").append("svg").attr("width", width).attr("height", height).append("g")
+       .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 
        var i = 0,
@@ -173,6 +174,9 @@ console.log(url)
                update(d);
            }
        }
+
+var width = height*0.9;
+var height = width*(1/0.9)+6;
 
     //  var data = error;
      console.log(data)
