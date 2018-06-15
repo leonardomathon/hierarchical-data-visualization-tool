@@ -25,7 +25,7 @@ def display(request, data_id):
 
     # Check if uploaded file has right newick format
     if check_json(data_id):
-        return render(request, 'display/display.html', {'data': data})
+        return render(request, 'display/display.html', {'data': data, 'file_size': getFileSize(data_id)})
     else:
         # Return redirect to home page with message
         messages.add_message(request, messages.INFO, "You tried to upload a invalid tree. Make sure the file format corresponds with the <a href='https://en.wikipedia.org/wiki/Newick_format' style='color:white;'><u>example</u></a>")
@@ -56,7 +56,7 @@ def get_json(node):
 
     #If node has no name, assign random name
     if node.name == "":
-        node.name = "junction_" + random.randint(0, 100000)
+        node.name = random.randint(0, 10000)
 
     # JSON format
     json = {"name": node.name,
@@ -95,3 +95,10 @@ def check_json(data_id):
     else:
         return True
 
+def getFileSize(data_id):
+    data = get_object_or_404(Data, pk=data_id)
+    for file in os.listdir(settings.BASE_DIR + "/uploads/data_"+data.dataname):
+        if file.endswith('.tre'):
+            file_name = file
+    file_size = os.stat(settings.BASE_DIR + "/uploads/data_"+data.dataname+"/"+file_name).st_size
+    return file_size / 1000   
