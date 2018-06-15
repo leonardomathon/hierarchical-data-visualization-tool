@@ -23,7 +23,7 @@ BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 SECRET_KEY = 'cp9vrs2drr0a$!ampw-g+^tiw125hqms&op14mfnt!!ido=x=g'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ["dbl.logicbit.nl", "localhost", "127.0.0.1", "131.155.225.48"]
 
