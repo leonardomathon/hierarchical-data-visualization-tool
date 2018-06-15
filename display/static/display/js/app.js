@@ -247,7 +247,7 @@ var height = width*(1/0.9)+6;
         }).attr("transform", function (d) {
             return labelTransform(d.current);
         }).text(function (d) {
-            if(d.data.name.length < 16) {
+            if (d.data.name.length < 16 || typeof d.data.name == "number") {
 				return d.data.name;
 			}
 			else if (d.data.name.indexOf(' ') >= 0) {
