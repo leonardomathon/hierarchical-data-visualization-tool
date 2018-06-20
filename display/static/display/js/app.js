@@ -91,7 +91,7 @@ var widthScale = d3.scaleLinear().domain([1, 80]).range([1, 10]);
 
             //Calculate correction to center source node
             x_diff = source.x - height /  2;
-            y_diff = source.y - width / 3;
+            y_diff = source.y - width / 2;
 
             //Change position of every node to correct drag and center source node
             nodes.forEach(function (d) {
