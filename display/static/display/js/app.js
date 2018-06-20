@@ -244,7 +244,6 @@ var widthScale = d3.scaleLinear().domain([1, 80]).range([1, 10]);
             update(d);
         }
     }
-}
 
 var width = height*0.9;
 var height = width*(1/0.9)+6;
