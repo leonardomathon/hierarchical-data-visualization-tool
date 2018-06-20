@@ -25,7 +25,16 @@ def display(request, data_id):
 
     # Check if uploaded file has right newick format
     if check_json(data_id):
-        return render(request, 'display/display.html', {'data': data})
+        if fileTooBig(data_id):
+            # Return redirect to home page with message
+            messages.add_message(request, messages.INFO, "Sorry, the dataset that you tried to upload is too big, max file size is 100 MB")
+            # Remove uploaded file from database
+            data = Data.objects.get(pk=data_id)
+            data.delete()
+            # Return redirect to home
+            return redirect('../../')
+        else:
+            return render(request, 'display/display.html', {'data': data, 'file_size': getFileSize(data_id)})
     else:
         # Return redirect to home page with message
         messages.add_message(request, messages.INFO, "You tried to upload a invalid tree. Make sure the file format corresponds with the <a href='https://en.wikipedia.org/wiki/Newick_format' style='color:white;'><u>example</u></a>")
@@ -95,3 +104,17 @@ def check_json(data_id):
     else:
         return True
 
+def getFileSize(data_id):
+    data = get_object_or_404(Data, pk=data_id)
+    for file in os.listdir(settings.BASE_DIR + "/uploads/data_"+data.dataname):
+        if file.endswith('.tre'):
+            file_name = file
+    file_size = os.stat(settings.BASE_DIR + "/uploads/data_"+data.dataname+"/"+file_name).st_size
+    return file_size / 1000 
+
+def fileTooBig(data_id):
+    file_size = getFileSize(data_id)
+    if file_size > 100000000:
+        return True
+    else:
+        return False

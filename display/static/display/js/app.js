@@ -1,183 +1,259 @@
 //var data = require("http://localhost:8000/display/1/json")
 var url = window.location.href + "json";
+var svg;
+var svg1;
+
 console.log(url)
  jsonDATA = d3.json(url, function(error, data) {
    var width = document.getElementById("vis2").offsetWidth;
    var height = width*0.9;
 
-   // Set the dimensions and margins of the diagram
-       var margin = { top: 0, right: 0, bottom: 0, left: 0 };
+   //Dimensions and margins of the diagram
+var margin_horizontal = 90;
+var margin_vertical = 20;
+var zoomDepth = 1;
+var x_trans = 0;
+var y_trans = 0;
+var centerNode = 0;
+var x_diff = 0;
+var y_diff = 0;
 
 
-       var widthScale = d3.scaleLinear().domain([1, 80]).range([1, 10]);
+var widthScale = d3.scaleLinear().domain([1, 80]).range([1, 10]);
 
-       // append the svg object to the body of the page
-       // appends a 'group' element to 'svg'
-       // moves the 'group' element to the top left margin
-       var svg = d3.select("#tree-container").append("svg").attr("width", width).attr("height", height).append("g")
-       .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+    // append the svg object to the body of the page
+    // appends a 'group' element to 'svg'
+    // moves the 'group' element to the top left margin
+    var svg1 = d3.select("#tree-container").append("svg").attr("width", width).attr("height", height).call(d3.zoom().on("zoom", function () {
+        svg1.attr("transform", d3.event.transform)
+        zoomDepth = d3.zoomTransform(this).k;   //Get zoom depth
+        y_trans = d3.zoomTransform(this).x; //Get drag correction horizontal
+        x_trans = d3.zoomTransform(this).y; //Get drag correction vertical
+        centerNode = 0; // no click
+        update(root);
+    })).append("g").attr("transform", "translate(" + margin_horizontal + "," + margin_vertical + ")");
 
 
-       var i = 0,
-           duration = 750,
-           root;
 
-       // declares a tree layout and assigns the size
-       var treemap = d3.tree().size([height, width]);
+    var i = 0,
+    duration = 750,
+    root;
 
-       // Assigns parent, children, height, depth
-       root = d3.hierarchy(data, function (d) {
-           return d.children;
-       });
-       root.x0 = height / 2;
-       root.y0 = 0;
 
-       // Collapse after the second level
-       root.children.forEach(collapse);
+    // declares a tree layout and assigns the size
+    var treemap = d3.tree().size([height- (2 * margin_vertical), width - (2 * margin_horizontal)]);
 
-       update(root);
+    // Assigns parent, children, height, depth
+    root = d3.hierarchy(data, function (d) {
+        return d.children;
+    });
+    root.x0 = height / 2;
+    root.y0 = 0;
 
-       // Collapse the node and all it's children
-       function collapse(d) {
-           if (d.children) {
-               d._children = d.children;
-               d._children.forEach(collapse);
-               d.children = null;
-           }
-       }
 
-       function update(source) {
+    // Collapse after the second level
+    root.children.forEach(collapse);
 
-           // Assigns the x and y position for the nodes
-           var treeData = treemap(root);
 
-           // Compute the new tree layout.
-           var nodes = treeData.descendants(),
-               links = treeData.descendants().slice(1);
+    update(root);
 
-           // Normalize for fixed-depth.
-           nodes.forEach(function (d) {
-               d.y = d.depth * 180;
-           });
+    // Collapse the node and all it's children
+    function collapse(d) {
+        if (d.children) {
+            d._children = d.children;
+            d._children.forEach(collapse);
+            d.children = null;
+        }
+    }
 
-           // ****************** Nodes section ***************************
 
-           // Update the nodes...
-           var node = svg.selectAll('g.node').data(nodes, function (d) {
-               return d.id || (d.id = ++i);
-           });
 
-           // Enter any new modes at the parent's previous position.
-           var nodeEnter = node.enter().append('g').attr('class', 'node').attr("transform", function (d) {
-               return "translate(" + source.y0 + "," + source.x0 + ")";
-           }).on('click', click);
+    function update(source) {
 
-           // Add Circle for the nodes
-           nodeEnter.append('circle').attr('class', 'node').attr('r', 1e-6).style("fill", function (d) {
-               return d._children ?  "#1B3A5E" : "#F96332";
-           }).style("stroke", function (d) {
-               return "#1B3A5E";
-           });
+        //document.getElementById(".node text").style.fontSize = "xx-small";
 
-           // Add labels for the nodes
-           nodeEnter.append('text').attr("dy", ".35em").attr("x", function (d) {
-               return d.children || d._children ? -13 : 13;
-           }).attr("text-anchor", function (d) {
-               return d.children || d._children ? "end" : "start";
-           }).text(function (d) {
-               return d.data.name;
-           }).style("fill", function (d) {
-               return  "#1B3A5E";
-           });
+        // Assigns the x and y position for the nodes
+        var data = treemap(root);
 
-           // UPDATE
-           var nodeUpdate = nodeEnter.merge(node);
 
-           // Transition to the proper position for the node
-           nodeUpdate.transition().duration(duration).attr("transform", function (d) {
-               return "translate(" + d.y + "," + d.x + ")";
-           });
 
-           // Update the node attributes and style
-           nodeUpdate.select('circle.node').attr('r', 10).style("fill", function (d) {
-               return d._children ? "#1B3A5E" : "#F96332";
-           }).attr('cursor', 'pointer');
+        // Compute the new tree layout.
+        var nodes = data.descendants(),
+        links = data.descendants().slice(1);
 
-           // Remove any exiting nodes
-           var nodeExit = node.exit().transition().duration(duration).attr("transform", function (d) {
-               return "translate(" + source.y + "," + source.x + ")";
-           }).remove();
+        // Normalize for fixed-depth
+        nodes.forEach(function (d) {
+            d.y = (d.depth * 200) ;
+        });
 
-           // On exit reduce the node circles size to 0
-           nodeExit.select('circle').attr('r', 1e-6);
+        //Only after click
+        if (centerNode == 1){
 
-           // On exit reduce the opacity of text labels
-           nodeExit.select('text').style('fill-opacity', 1e-6);
+            //Calculate correction to center source node
+            x_diff = source.x - height /  2;
+            y_diff = source.y - width / 2;
 
-           // ****************** links section ***************************
+            //Change position of every node to correct drag and center source node
+            nodes.forEach(function (d) {
+                d.y = (d.y - y_trans - y_diff);
+                d.x = (d.x - x_trans - x_diff);
+            });
 
-           // Update the links...
-           var link = svg.selectAll('path.link').data(links, function (d) {
-               return d.id;
-           }).style('stroke-width', function (d) {
-               return widthScale(d.data.value);
-           });
+            //Calculate zoom correction
+            x_diff = source.x - (source.x / zoomDepth);
+            y_diff = source.y - (source.y / zoomDepth);
 
-           // Enter any new links at the parent's previous position.
-           var linkEnter = link.enter().insert('path', "g").attr("class", "link").attr('d', function (d) {
-               var o = { x: source.x0, y: source.y0 };
-               return diagonal(o, o);
-           }).style('stroke-width', function (d) {
-               return widthScale(d.data.value);
-           });
+            //Apply zoom correction to each node
+            nodes.forEach(function (d) {
+                d.y = d.y - y_diff;
+                d.x = d.x - x_diff;
+            });
+        }
 
-           // UPDATE
-           var linkUpdate = linkEnter.merge(link);
+        // ****************** Nodes section ***************************
 
-           // Transition back to the parent element position
-           linkUpdate.transition().duration(duration).attr('d', function (d) {
-               return diagonal(d, d.parent);
-           });
+        // Update the nodes...
+        var node = svg1.selectAll('g.node').data(nodes, function (d) {
+            return d.id || (d.id = ++i);
+        });
 
-           // Remove any exiting links
-           var linkExit = link.exit().transition().duration(duration).attr('d', function (d) {
-               var o = { x: source.x, y: source.y };
-               return diagonal(o, o);
-           }).style('stroke-width', function (d) {
-               return widthScale(d.data.value);
-           }).remove();
+        // Enter any new nodes at the parent's previous position.
+        var nodeEnter = node.enter().append('g').attr('class', 'node').attr("transform", function (d) {
+            return "translate(" + source.y0 + "," + source.x0 + ")";
+        }).on('click', click);
 
-           // Store the old positions for transition.
-           nodes.forEach(function (d) {
-               d.x0 = d.x;
-               d.y0 = d.y;
-           });
+        // UPDATE
+        var nodeUpdate = nodeEnter.merge(node);
 
-           // Creates a curved (diagonal) path from parent to the child nodes
-           function diagonal(s, d) {
+        // Remove any old circle
+        svg1.selectAll("circle").remove();
 
-               path = 'M ' + s.y + ' ' + s.x + '\n            C ' + (s.y + d.y) / 2 + ' ' + s.x + ',\n              ' + (s.y + d.y) / 2 + ' ' + d.x + ',\n              ' + d.y + ' ' + d.x;
+        // Add Circle for the nodes
+        nodeUpdate.append('circle').attr('class', 'node').attr('r', 1e-6).style("fill", function (d) {
+            return d._children ?  "#1B3A5E" : "#F96332";
+        }).style("stroke-width", 3 / zoomDepth).style("stroke", "#1B3A5E");
 
-               return path;
-           }
 
-           // Toggle children on click.
-           function click(d) {
-               if (d.children) {
-                   d._children = d.children;
-                   d.children = null;
-               } else {
-                   d.children = d._children;
-                   d._children = null;
-               }
-              // centerNode(d);
-               update(d);
-           }
-       }
+        // Remove any old text
+        svg1.selectAll("text").remove();
+
+        // Only when tree has a certain size
+        if (zoomDepth > 0.4){
+        // Add labels for the nodes
+        nodeUpdate.append('text').style("font-size", 12 / zoomDepth + "px").attr("dy", ".35em").attr("x", function (d) {
+            return d.children || d._children ? -13 / zoomDepth : 13 / zoomDepth;
+        }).attr("text-anchor", function (d) {
+            return d.children || d._children ? "end" : "start";
+        }).text(function (d) {
+          if (typeof d.data.name == "string")  {
+
+            if(d.data.name.length < 20 * zoomDepth) {
+             if (d.data.name.length < 20 * zoomDepth || typeof d.data.name == "number") {
+                return d.data.name;
+            }}
+            else if (d.data.name.indexOf(' ') >= 0) {
+                var fields = d.data.name.split(' ');
+                if (fields[0].length < 17 * zoomDepth) {
+                    return fields[0] + "...";
+                }
+                else {
+                    return d.data.name.substr(0, 17 * zoomDepth) + "...";
+                }
+            }
+            else {
+                return d.data.name.substr(0, 17 * zoomDepth) + "...";
+            }
+
+            } else {
+            d.data.name = "";
+            }
+        }).style("fill", "#1B3A5E");
+    }
+
+
+        // Transition to the proper position for the node
+        nodeUpdate.transition().duration(duration).attr("transform", function (d) {
+            return "translate(" + d.y + "," + d.x + ")";
+        });
+
+
+        // Update the node attributes and style
+        nodeUpdate.select('circle.node').attr('r', 10 / zoomDepth).style("fill", function (d) {
+            return d._children ? "#1B3A5E" : "#F96332";
+        }).attr('cursor', 'pointer');
+
+        // Remove any exiting nodes
+        var nodeExit = node.exit().transition().duration(duration).attr("transform", function (d) {
+            return "translate(" + d.y + "," + d.x + ")";
+        }).remove();
+
+        // On exit reduce the node circles size to 0
+        nodeExit.select('circle').attr('r', 1e-6);
+
+        // On exit reduce the opacity of text labels
+        nodeExit.select('text').style('fill-opacity', 1e-6);
+
+        // ****************** links section ***************************
+
+        // Update the links...
+        var link = svg1.selectAll('path.link').data(links, function (d) {
+            return d.id;
+        }).style('stroke-width', 3 / zoomDepth);
+
+        // Enter any new links at the parent's previous position.
+        var linkEnter = link.enter().insert('path', "g").attr("class", "link").attr('d', function (d) {
+            var o = { x: source.x0, y: source.y0 };
+            return diagonal(o, o);
+        }).style('stroke-width', 3 / zoomDepth);
+
+        // UPDATE
+        var linkUpdate = linkEnter.merge(link);
+
+        // Transition back to the parent element position
+        linkUpdate.transition().duration(duration).attr('d', function (d) {
+            return diagonal(d, d.parent);
+        });
+
+        // Remove any exiting links
+        var linkExit = link.exit().transition().duration(duration).attr('d', function (d) {
+            var o = { x: source.x, y: source.y };
+            return diagonal(o, o);
+        }).style('stroke-width', 3 / zoomDepth).remove();
+
+        // Store the old positions for transition.
+        nodes.forEach(function (d) {
+            d.x0 = d.x;
+            d.y0 = d.y;
+        });
+
+        // Creates a curved (diagonal) path from parent to the child nodes
+        function diagonal(s, d) {
+
+            path = 'M ' + s.y + ' ' + s.x + '\n            C ' + (s.y + d.y) / 2 + ' ' + s.x + ',\n              ' + (s.y + d.y) / 2 + ' ' + d.x + ',\n              ' + d.y + ' ' + d.x;
+
+            return path;
+        }
+
+
+
+        // Toggle children on click.
+        function click(d) {
+            if (d.children) {
+                d._children = d.children;
+                d.children = null;
+            } else if(d._children) {
+                d.children = d._children;
+                d._children = null;
+            } 
+            centerNode = 1;
+            update(d);
+        }
+    }
 
 var width = height*0.9;
 var height = width*(1/0.9)+6;
 
+// SECOND VIZ
     //  var data = error;
      console.log(data)
      console.log(data.children.length + 1)
@@ -218,7 +294,7 @@ var height = width*(1/0.9)+6;
         root.each(function (d) {
             return d.current = d;
         });
-        var svg = d3.select("#vis2").append("svg:svg")
+        svg = d3.select("#vis2").append("svg:svg")
             .style("width", width)
             .style("height", height)
             .style("font", "10px sans-serif")
@@ -247,8 +323,25 @@ var height = width*(1/0.9)+6;
         }).attr("transform", function (d) {
             return labelTransform(d.current);
         }).text(function (d) {
-            return d.data.name;
-        });
+            if (typeof d.data.name == "number") {
+				return "";
+			}
+			else if (d.data.name.length < 16) {
+				return d.data.name;
+			}
+			else if (d.data.name.indexOf(' ') >= 0) {
+				var fields = d.data.name.split(' ');
+				if (fields[0].length < 13) {
+					return fields[0] + "...";
+				}
+				else {
+					return d.data.name.substr(0, 12) + "...";
+				}
+			}
+			else {
+				return d.data.name.substr(0, 12) + "...";
+			}
+		});
         var parent = g.append("circle").datum(root).attr("r", radius).attr("fill", "none").attr("pointer-events", "all").on("click", clicked);
         function clicked(p) {
             parent.datum(p.parent || root);
@@ -305,5 +398,228 @@ var height = width*(1/0.9)+6;
         }
         return svg.node();
     }
+
+    // Set-up the export button Viz 2
+    d3.select('#saveButton2').on('click', function(){
+    	var svgString = getSVGString(svg.node());
+    	svgString2Image( svgString, 2*width, 2*height, 'png', save ); // passes Blob and filesize String to the callback
+
+    	function save( dataBlob, filesize ){
+    		saveAs( dataBlob, 'Visualization2.png' ); // FileSaver.js function
+    	}
+    });
+
+    // Below are the functions that handle actual exporting:
+    // getSVGString ( svgNode ) and svgString2Image( svgString, width, height, format, callback )
+    function getSVGString( svgNode ) {
+    	svgNode.setAttribute('xlink', 'http://www.w3.org/1999/xlink');
+    	var cssStyleText = getCSSStyles( svgNode );
+    	appendCSS( cssStyleText, svgNode );
+
+    	var serializer = new XMLSerializer();
+    	var svgString = serializer.serializeToString(svgNode);
+    	svgString = svgString.replace(/(\w+)?:?xlink=/g, 'xmlns:xlink='); // Fix root xlink without namespace
+    	svgString = svgString.replace(/NS\d+:href/g, 'xlink:href'); // Safari NS namespace fix
+
+    	return svgString;
+
+    	function getCSSStyles( parentElement ) {
+    		var selectorTextArr = [];
+
+    		// Add Parent element Id and Classes to the list
+    		selectorTextArr.push( '#'+parentElement.id );
+    		for (var c = 0; c < parentElement.classList.length; c++)
+    				if ( !contains('.'+parentElement.classList[c], selectorTextArr) )
+    					selectorTextArr.push( '.'+parentElement.classList[c] );
+
+    		// Add Children element Ids and Classes to the list
+    		var nodes = parentElement.getElementsByTagName("*");
+    		for (var i = 0; i < nodes.length; i++) {
+    			var id = nodes[i].id;
+    			if ( !contains('#'+id, selectorTextArr) )
+    				selectorTextArr.push( '#'+id );
+
+    			var classes = nodes[i].classList;
+    			for (var c = 0; c < classes.length; c++)
+    				if ( !contains('.'+classes[c], selectorTextArr) )
+    					selectorTextArr.push( '.'+classes[c] );
+    		}
+
+    		// Extract CSS Rules
+    		var extractedCSSText = "";
+    		for (var i = 0; i < document.styleSheets.length; i++) {
+    			var s = document.styleSheets[i];
+
+    			try {
+    			    if(!s.cssRules) continue;
+    			} catch( e ) {
+    		    		if(e.name !== 'SecurityError') throw e; // for Firefox
+    		    		continue;
+    		    	}
+
+    			var cssRules = s.cssRules;
+    			for (var r = 0; r < cssRules.length; r++) {
+    				if ( contains( cssRules[r].selectorText, selectorTextArr ) )
+    					extractedCSSText += cssRules[r].cssText;
+    			}
+    		}
+
+
+    		return extractedCSSText;
+
+    		function contains(str,arr) {
+    			return arr.indexOf( str ) === -1 ? false : true;
+    		}
+
+    	}
+
+    	function appendCSS( cssText, element ) {
+    		var styleElement = document.createElement("style");
+    		styleElement.setAttribute("type","text/css");
+    		styleElement.innerHTML = cssText;
+    		var refNode = element.hasChildNodes() ? element.children[0] : null;
+    		element.insertBefore( styleElement, refNode );
+    	}
+    }
+
+
+    function svgString2Image( svgString, width, height, format, callback ) {
+    	var format = format ? format : 'png';
+
+    	var imgsrc = 'data:image/svg+xml;base64,'+ btoa( unescape( encodeURIComponent( svgString ) ) ); // Convert SVG string to data URL
+
+    	var canvas = document.createElement("canvas");
+    	var context = canvas.getContext("2d");
+
+    	canvas.width = width;
+    	canvas.height = height;
+
+    	var image = new Image();
+    	image.onload = function() {
+    		context.clearRect ( 0, 0, width, height );
+    		context.drawImage(image, 0, 0, width, height);
+
+    		canvas.toBlob( function(blob) {
+    			var filesize = Math.round( blob.length/1024 ) + ' KB';
+    			if ( callback ) callback( blob, filesize );
+    		});
+
+
+    	};
+
+    	image.src = imgsrc;
+    }
+
+
+
+    // button Viz 1
+
+    d3.select('#saveButton1').on('click', function(){
+            	var svgString2 = getsvgString2(svg.node());
+            	svgString2Image2( svgString2, 2*width, 2*height, 'png', save ); // passes Blob and filesize String to the callback
+
+            	function save2( dataBlob, filesize2 ){
+            		saveAs( dataBlob, 'Visualization1.png' ); // FileSaver.js function
+            	}
+            });
+
+        // Below are the functions that handle actual exporting:
+        // getsvgString2 ( svgNode ) and svgString22Image( svgString2, width, height, format, callback )
+        function getsvgString2( svgNode ) {
+        	svgNode.setAttribute('xlink', 'http://www.w3.org/1999/xlink');
+        	var cssStyleText = getCSSStyles2( svgNode );
+        	appendCSS2( cssStyleText, svgNode );
+
+        	var serializer = new XMLSerializer();
+        	var svgString2 = serializer.serializeToString(svgNode);
+        	svgString2 = svgString2.replace(/(\w+)?:?xlink=/g, 'xmlns:xlink='); // Fix root xlink without namespace
+        	svgString2 = svgString2.replace(/NS\d+:href/g, 'xlink:href'); // Safari NS namespace fix
+
+        	return svgString2;
+
+        	function getCSSStyles2( parentElement ) {
+        		var selectorTextArr = [];
+
+        		// Add Parent element Id and Classes to the list
+        		selectorTextArr.push( '#'+parentElement.id );
+        		for (var c = 0; c < parentElement.classList.length; c++)
+        				if ( !contains('.'+parentElement.classList[c], selectorTextArr) )
+        					selectorTextArr.push( '.'+parentElement.classList[c] );
+
+        		// Add Children element Ids and Classes to the list
+        		var nodes = parentElement.getElementsByTagName("*");
+        		for (var i = 0; i < nodes.length; i++) {
+        			var id = nodes[i].id;
+        			if ( !contains('#'+id, selectorTextArr) )
+        				selectorTextArr.push( '#'+id );
+
+        			var classes = nodes[i].classList;
+        			for (var c = 0; c < classes.length; c++)
+        				if ( !contains('.'+classes[c], selectorTextArr) )
+        					selectorTextArr.push( '.'+classes[c] );
+        		}
+
+        		// Extract CSS Rules
+        		var extractedCSSText = "";
+        		for (var i = 0; i < document.styleSheets.length; i++) {
+        			var s = document.styleSheets[i];
+
+        			try {
+        			    if(!s.cssRules) continue;
+        			} catch( e ) {
+        		    		if(e.name !== 'SecurityError') throw e; // for Firefox
+        		    		continue;
+        		    	}
+
+        			var cssRules = s.cssRules;
+        			for (var r = 0; r < cssRules.length; r++) {
+        				if ( contains( cssRules[r].selectorText, selectorTextArr ) )
+        					extractedCSSText += cssRules[r].cssText;
+        			}
+        		}
+
+
+        		return extractedCSSText;
+
+        		function contains(str,arr) {
+        			return arr.indexOf( str ) === -1 ? false : true;
+        		}
+
+        	}
+
+        	function appendCSS2( cssText, element ) {
+        		var styleElement = document.createElement("style");
+        		styleElement.setAttribute("type","text/css");
+        		styleElement.innerHTML = cssText;
+        		var refNode = element.hasChildNodes() ? element.children[0] : null;
+        		element.insertBefore( styleElement, refNode );
+        	}
+        }
+
+
+        function svgString2Image2( svgString2, width, height, format, callback ) {
+        	var format = format ? format : 'png';
+
+        	var imgsrc = 'data:image/svg+xml;base64,'+ btoa( unescape( encodeURIComponent( svgString2 ) ) ); // Convert SVG string to data URL
+
+        	var canvas = document.createElement("canvas");
+        	var context = canvas.getContext("2d");
+
+        	canvas.width = width;
+        	canvas.height = height;
+
+        	var image = new Image();
+        	image.onload = function() {
+        		context.clearRect ( 0, 0, width, height );
+        		context.drawImage(image, 0, 0, width, height);
+
+        		canvas.toBlob( function(blob) {
+        			var filesize = Math.round( blob.length/1024 ) + ' KB';
+        			if ( callback ) callback( blob, filesize );
+        		});
+        	};
+
+        	image.src = imgsrc;
+        }
     window.onload = chart();
 });

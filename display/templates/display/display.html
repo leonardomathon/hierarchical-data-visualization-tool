@@ -19,6 +19,7 @@
                     </p>
                 </div>
                 <div class="card-body">
+
                     <div class="table-responsive" style="overflow: hidden;">
                         <table class="table">
                             <thead class=" text-primary">
@@ -26,6 +27,7 @@
                                 <th scope="col">Dataname</th>
                                 <th scope="col">Filepath</th>
                                 <th scope="col">Uploaded at</th>
+                                <th scope="col">File size</th>
                             </thead>
                             <tbody>
                                 <tr>
@@ -35,6 +37,7 @@
                                     </td>
                                     <td>/uploads/{{data.file_path}}</td>
                                     <td>{{data.created_at}}</td>
+                                    <td>{{file_size}} KB</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -47,8 +50,11 @@
         <div class="col-lg-12 col-xl-6">
             <div class="card card-chart">
                 <div class="card-header">
-                    <h5 class="card-category">Visualization</h5>
+                    <h5 class="card-category">Visualization
+                        <i class="now-ui-icons travel_info" style="float:right; font-size: 30px" data-toggle="modal" data-target="#modal1"></i>
+                    </h5>
                     <h4 class="card-title"> Visualization 1</h4>
+                    
                 </div>
                 <div class="card-body">
                     <p>Visualization 1</p>
@@ -97,7 +103,9 @@
                         }
                     </style>
                     <div id="tree-container"></div>
-
+                    <div>
+                        <button id='saveButton1'>Export Visualization 1 to PNG</button>
+                    </div>
 
                 </div>
             </div>
@@ -105,15 +113,24 @@
         <div class="col-lg-12 col-xl-6">
             <div class="card card-chart">
                 <div class="card-header">
-                    <h5 class="card-category">Visualization</h5>
+                <h5 class="card-category">Visualization
+                        <i class="now-ui-icons travel_info" style="float:right; font-size: 30px;" data-toggle="modal" data-target="#modal1"></i>
+                    </h5>
                     <h4 class="card-title"> Visualization 2</h4>
                 </div>
                 <div class="card-body">
                     <p>Visualization 2</p>
                         <div id="vis2">
+                            <script src="https://cdn.rawgit.com/eligrey/canvas-toBlob.js/f1a01896135ab378aa5c0118eadd81da55e698d8/canvas-toBlob.js"></script>
+                            <script src="https://cdn.rawgit.com/eligrey/FileSaver.js/e9d941381475b5df8b7d7691013401e171014e89/FileSaver.min.js"></script>
+
                             <script src="https://d3js.org/d3.v4.min.js"></script>
                             <script src="{% static "display/js/app.js" %}"></script>
                         </div>
+                        <div>
+                        <button id='saveButton2'>Export Visualization 2 to PNG</button>
+                        </div>
+
                     <style>
                         path {
                             stroke: #fff;
@@ -127,6 +144,7 @@
 
 </div>
 </div>
+{% include "display/modals.html" %}
 {% endblock content %} {% block content_scripts %}
 <script>
     $("#tree-container > svg").bind("wheel mousewheel", function (e) {

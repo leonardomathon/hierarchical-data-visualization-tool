@@ -25,7 +25,7 @@ SECRET_KEY = 'cp9vrs2drr0a$!ampw-g+^tiw125hqms&op14mfnt!!ido=x=g'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["dbl.logicbit.nl", "localhost", "127.0.0.1", "131.155.224.151"]
+ALLOWED_HOSTS = ["dbl.logicbit.nl", "localhost", "127.0.0.1", "131.155.225.48"]
 
 
 # Application definition
@@ -151,3 +151,5 @@ STATICFILES_DIRS = (
     # Don't forget to use absolute paths, not relative paths.
  os.path.join(BASE_DIR, '../now-ui/assets/'),
 )
+
+MAX_UPLOAD_SIZE = "100000000"
