@@ -320,7 +320,7 @@ var height = width*(1/0.9)+6;
             return labelTransform(d.current);
         }).text(function (d) {
             if (typeof d.data.name == "string")  {
-                if (d.data.name.length < 16 || typeof d.data.name == "number") {
+                if (d.data.name.length < 16) {
                     return d.data.name;
                 }
                 else if (d.data.name.indexOf(' ') >= 0) {
