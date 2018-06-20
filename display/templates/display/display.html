@@ -50,8 +50,11 @@
         <div class="col-lg-12 col-xl-6">
             <div class="card card-chart">
                 <div class="card-header">
-                    <h5 class="card-category">Visualization</h5>
+                    <h5 class="card-category">Visualization
+                        <i class="now-ui-icons travel_info" style="float:right; font-size: 30px" data-toggle="modal" data-target="#modal1"></i>
+                    </h5>
                     <h4 class="card-title"> Visualization 1</h4>
+                    
                 </div>
                 <div class="card-body">
                     <p>Visualization 1</p>
@@ -110,7 +113,9 @@
         <div class="col-lg-12 col-xl-6">
             <div class="card card-chart">
                 <div class="card-header">
-                <h5 class="card-category">Visualization</h5>
+                <h5 class="card-category">Visualization
+                        <i class="now-ui-icons travel_info" style="float:right; font-size: 30px;" data-toggle="modal" data-target="#modal1"></i>
+                    </h5>
                     <h4 class="card-title"> Visualization 2</h4>
                 </div>
                 <div class="card-body">
@@ -139,6 +144,7 @@
 
 </div>
 </div>
+{% include "display/modals.html" %}
 {% endblock content %} {% block content_scripts %}
 <script>
     $("#tree-container > svg").bind("wheel mousewheel", function (e) {
