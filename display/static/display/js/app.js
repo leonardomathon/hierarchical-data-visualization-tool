@@ -32,19 +32,19 @@ var widthScale = d3.scaleLinear().domain([1, 80]).range([1, 10]);
         centerNode = 0; // no click
         update(root);
     })).append("g").attr("transform", "translate(" + margin_horizontal + "," + margin_vertical + ")");
-    
+
 
 
     var i = 0,
     duration = 750,
     root;
-        
+
 
     // declares a tree layout and assigns the size
     var treemap = d3.tree().size([height- (2 * margin_vertical), width - (2 * margin_horizontal)]);
 
     // Assigns parent, children, height, depth
-    root = d3.hierarchy(treeData, function (d) {
+    root = d3.hierarchy(data, function (d) {
         return d.children;
     });
     root.x0 = height / 2;
@@ -73,13 +73,13 @@ var widthScale = d3.scaleLinear().domain([1, 80]).range([1, 10]);
         //document.getElementById(".node text").style.fontSize = "xx-small";
 
         // Assigns the x and y position for the nodes
-        var treeData = treemap(root);
+        var data = treemap(root);
 
 
 
         // Compute the new tree layout.
-        var nodes = treeData.descendants(),
-        links = treeData.descendants().slice(1);
+        var nodes = data.descendants(),
+        links = data.descendants().slice(1);
 
         // Normalize for fixed-depth
         nodes.forEach(function (d) {
@@ -97,7 +97,7 @@ var widthScale = d3.scaleLinear().domain([1, 80]).range([1, 10]);
             nodes.forEach(function (d) {
                 d.y = (d.y - y_trans - y_diff);
                 d.x = (d.x - x_trans - x_diff);
-            }); 
+            });
 
             //Calculate zoom correction
             x_diff = source.x - (source.x / zoomDepth);
@@ -107,9 +107,9 @@ var widthScale = d3.scaleLinear().domain([1, 80]).range([1, 10]);
             nodes.forEach(function (d) {
                 d.y = d.y - y_diff;
                 d.x = d.x - x_diff;
-            }); 
+            });
         }
-        
+
         // ****************** Nodes section ***************************
 
         // Update the nodes...
@@ -145,6 +145,8 @@ var widthScale = d3.scaleLinear().domain([1, 80]).range([1, 10]);
         }).attr("text-anchor", function (d) {
             return d.children || d._children ? "end" : "start";
         }).text(function (d) {
+          if (typeof d.data.name == "string")  {
+
             if(d.data.name.length < 20 * zoomDepth) {
              if (d.data.name.length < 20 * zoomDepth || typeof d.data.name == "number") {
                 return d.data.name;
@@ -162,6 +164,9 @@ var widthScale = d3.scaleLinear().domain([1, 80]).range([1, 10]);
                 return d.data.name.substr(0, 17 * zoomDepth) + "...";
             }
 
+            } else {
+            d.data.name = "";
+            }
         }).style("fill", "#1B3A5E");
     }
 
@@ -337,7 +342,7 @@ var height = width*(1/0.9)+6;
             } else {
                 d.data.name = "";
             }
-            
+
         });
         var parent = g.append("circle").datum(root).attr("r", radius).attr("fill", "none").attr("pointer-events", "all").on("click", clicked);
         function clicked(p) {
