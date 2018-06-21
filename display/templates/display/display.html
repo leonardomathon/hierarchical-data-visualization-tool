@@ -120,13 +120,8 @@
                 </div>
                 <div class="card-body">
                     <p>Visualization 2</p>
-                        <div id="vis2">
-                            <script src="https://cdn.rawgit.com/eligrey/canvas-toBlob.js/f1a01896135ab378aa5c0118eadd81da55e698d8/canvas-toBlob.js"></script>
-                            <script src="https://cdn.rawgit.com/eligrey/FileSaver.js/e9d941381475b5df8b7d7691013401e171014e89/FileSaver.min.js"></script>
-
-                            <script src="https://d3js.org/d3.v4.min.js"></script>
-                            <script src="{% static "display/js/app.js" %}"></script>
-                            <script src="{% static "display/js/link.js" %}"></script>
+                    <div id="vis2">
+                            <div id="label"></div>
                         </div>
                         <div>
                         <button id='saveButton2'>Export Visualization 2 to PNG</button>
@@ -151,5 +146,11 @@
     $("#tree-container > svg").bind("wheel mousewheel", function (e) {
         e.preventDefault()
     });
-</script>
+    </script>
+    <script src="https://cdn.rawgit.com/eligrey/canvas-toBlob.js/f1a01896135ab378aa5c0118eadd81da55e698d8/canvas-toBlob.js"></script>
+    <script src="https://cdn.rawgit.com/eligrey/FileSaver.js/e9d941381475b5df8b7d7691013401e171014e89/FileSaver.min.js"></script>
+
+    <script src="{% static "display/js/require.js" %}"></script>
+    <script src="{% static "display/js/vis1.js" %}"></script>
+    <script src="{% static "display/js/vis2.js" %}"></script>
 {% endblock content_scripts %}
