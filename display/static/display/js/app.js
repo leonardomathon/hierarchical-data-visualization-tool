@@ -23,7 +23,7 @@ jsonDATA = d3.json(url, function (error, data) {
     // append the svg object to the body of the page
     // appends a 'group' element to 'svg'
     // moves the 'group' element to the top left margin
-    var svg1 = d3.select("#tree-container").append("svg").attr("width", width).attr("height", height).call(d3.zoom().on("zoom", function () {
+    var svg1 = d3.select("#tree-container").append("svg").attr("width", width).attr("height", height).call(d3.zoom().scaleExtent([0.01, 100]).on("zoom", function () {
         svg1.attr("transform", d3.event.transform)
         zoomDepth = d3.zoomTransform(this).k; //Get zoom depth
         y_trans = d3.zoomTransform(this).x; //Get drag correction horizontal
