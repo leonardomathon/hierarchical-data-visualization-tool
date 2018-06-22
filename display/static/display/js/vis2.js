@@ -11,7 +11,6 @@ require(["https://d3js.org/d3.v3.min.js"], function (d3) {
     function filter_min_arc_size_text(d, i) {
         return (d.dx * d.depth * radius / 3) > 14
     };
-
     var hue = d3.scale.category20();
 
     var luminance = d3.scale.sqrt()
@@ -27,7 +26,7 @@ require(["https://d3js.org/d3.v3.min.js"], function (d3) {
 
     var partition = d3.layout.partition()
         .sort(function (a, b) {
-            return d3.ascending(a.name, b.name);
+            return b.value - a.value;
         })
         .size([2 * Math.PI, radius]);
 
@@ -55,15 +54,28 @@ require(["https://d3js.org/d3.v3.min.js"], function (d3) {
 
     function format_description(d) {
         var description = d.description;
-        return '<b>' + d.name;
+        _seq = "";
+        while (typeof d.parent != "undefined") {
+            if (typeof d.name == "number") {
+                _seq = " " + " / " + _seq;
+            }
+            else {
+                _seq = d.name + " / " + _seq;
+            }
+            d = d.parent
+        }
+        if (typeof d.name == "number") {
+            _seq = " " + " / " + _seq;
+        }
+        else {
+            _seq = d.name + " / " + _seq;
+        }
+        return _seq;
     }
-
     function computeTextRotation(d) {
         var angle = (d.x + d.dx / 2) * 180 / Math.PI - 90
-
         return angle;
     }
-
     function mouseOverArc(d) {
         d3.select(this).attr("stroke", "black")
 
@@ -137,7 +149,6 @@ require(["https://d3js.org/d3.v3.min.js"], function (d3) {
             .on("mousemove", mouseMoveArc)
             .on("mouseout", mouseOutArc);
 
-
         var texts = svg.selectAll("text")
             .data(partitioned_data)
             .enter().append("text")
@@ -151,8 +162,25 @@ require(["https://d3js.org/d3.v3.min.js"], function (d3) {
             .attr("dx", "6") // margin
             .attr("dy", ".35em") // vertical-align	
             .text(function (d, i) {
-                return d.name
-            })
+                if (typeof d.name == "number") {
+                    return "";
+                }
+                else if (d.name.length < 11) {
+                    return d.name;
+                }
+                else if (d.name.indexOf(' ') >= 0) {
+                    var fields = d.name.split(' ');
+                    if (fields[0].length < 8) {
+                        return fields[0] + "...";
+                    }
+                    else {
+                        return d.name.substr(0, 7) + "...";
+                    }
+                }
+                else {
+                    return d.name.substr(0, 7) + "...";
+                }
+            });
 
         function zoomIn(p) {
             if (p.depth > 1) p = p.parent;
@@ -226,7 +254,6 @@ require(["https://d3js.org/d3.v3.min.js"], function (d3) {
                         return arcTween.call(this, exitArc(d));
                     })
                     .remove();
-
                 path.enter().append("path")
                     .style("fill-opacity", function (d) {
                         return d.depth === 2 - (root === p) ? 1 : 0;
@@ -242,15 +269,11 @@ require(["https://d3js.org/d3.v3.min.js"], function (d3) {
                         this._current = enterArc(d);
                     });
 
-
                 path.transition()
                     .style("fill-opacity", 1)
                     .attrTween("d", function (d) {
                         return arcTween.call(this, updateArc(d));
                     });
-
-
-
             });
 
 
@@ -274,7 +297,24 @@ require(["https://d3js.org/d3.v3.min.js"], function (d3) {
                 .attr("dy", ".35em") // vertical-align
                 .filter(filter_min_arc_size_text)
                 .text(function (d, i) {
-                    return d.name
+                    if (typeof d.name == "number") {
+                        return "";
+                    }
+                    else if (d.name.length < 11) {
+                        return d.name;
+                    }
+                    else if (d.name.indexOf(' ') >= 0) {
+                        var fields = d.name.split(' ');
+                        if (fields[0].length < 8) {
+                            return fields[0] + "...";
+                        }
+                        else {
+                            return d.name.substr(0, 7) + "...";
+                        }
+                    }
+                    else {
+                        return d.name.substr(0, 7) + "...";
+                    }
                 })
                 .transition().delay(750).style("opacity", 1)
 
