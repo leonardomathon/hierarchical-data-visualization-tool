@@ -108,7 +108,7 @@ require(["https://d3js.org/d3.v3.min.js"], function (d3) {
             .nodes(root)
             .forEach(function (d) {
                 d._children = d.children;
-                d.sum = Math.log2(d.value);
+                d.sum = d.value;
                 d.key = key(d);
                 d.fill = fill(d);
             });
