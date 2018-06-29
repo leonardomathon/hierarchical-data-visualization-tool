@@ -51,7 +51,7 @@
             <div class="card card-chart">
                 <div class="card-header">
                     <h5 class="card-category">Visualization
-                        <i class="now-ui-icons travel_info" style="float:right; font-size: 30px" data-toggle="modal" data-target="#modal1"></i>
+                        <i id="modaltoggle1" class="now-ui-icons travel_info" style="float:right; font-size: 30px" data-toggle="modal" data-target="#modal1"></i>
                     </h5>
                     <h4 class="card-title"> Visualization 1</h4>
                     
@@ -104,7 +104,7 @@
                     </style>
                     <div id="tree-container"></div>
                     <div>
-                        <button id='saveButton1'>Export Visualization 1 to PNG</button>
+                        <button id='saveButton1' class="btn btn-primary">Export Visualization 1 to PNG</button>
                     </div>
 
                 </div>
@@ -124,7 +124,7 @@
                             <div id="label"></div>
                         </div>
                         <div>
-                        <button id='saveButton2'>Export Visualization 2 to PNG</button>
+                        <button id='saveButton2' class="btn btn-primary">Export Visualization 2 to PNG</button>
                         </div>
 
                     <style>
@@ -153,4 +153,5 @@
     <script src="{% static "display/js/require.js" %}"></script>
     <script src="{% static "display/js/vis1.js" %}"></script>
     <script src="{% static "display/js/vis2.js" %}"></script>
+    <script src="{% static "display/js/link.js" %}"></script>
 {% endblock content_scripts %}

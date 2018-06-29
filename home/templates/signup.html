@@ -1,21 +1,52 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
+{% block extra_head %}
+{% if user.is_authenticated %}
+    <meta http-equiv="REFRESH" content="0;url=/">
+{% endif %}
 
-{% block content %}
-<h2>Sign up</h2>
-<form method="post">
-    {% csrf_token %}
-    {% for field in form %}
-    <p>
-        {{ field.label_tag }}<br>
-        {{ field }}
-        {% if field.help_text %}
-        <small style="color: grey">{{ field.help_text }}</small>
-        {% endif %}
-        {% for error in field.errors %}
-    <p style="color: red">{{ error }}</p>
-    {% endfor %}
-    </p>
-    {% endfor %}
-    <button type="submit">Sign up</button>
-</form>
-{% endblock %}
+{% endblock extra_head %}
+ {% block content %}
+<div class="panel-header panel-header-lg" style="height: 250px;">
+    <div style="margin-left: 2rem;margin-right: 2rem;color:#fff;">
+        <h1>Create a new account</h1>
+        <p>
+            You can create a new account to upload and get to your private datasets.
+        </p>
+    </div>
+</div>
+<div class="content">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card card-chart">
+                <div class="card-header">
+                    <h5 class="card-category">Create an account</h5>
+                    <h4 class="card-title">Sign up</h4>
+                </div>
+                <div class="card-body">
+                  <form method="post">
+                      {% csrf_token %}
+                      {% for field in form %}
+                      <p>
+                          {{ field.label_tag }}<br>
+                          {{ field }}
+                          {% if field.help_text %}
+                          <small style="color: grey">{{ field.help_text }}</small>
+                          {% endif %}
+                          {% for error in field.errors %}
+                      <p style="color: red">{{ error }}</p>
+                      {% endfor %}
+                      </p>
+                      {% endfor %}
+                      <button type="submit">Sign up</button>
+                  </form>
+                </div>
+                <div class="card-footer">
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+</div>
+{% endblock content %}

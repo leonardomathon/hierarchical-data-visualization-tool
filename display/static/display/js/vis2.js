@@ -1,10 +1,10 @@
 var url = window.location.href + "json";
 require(["https://d3js.org/d3.v3.min.js"], function (d3) {
     var margin = {
-            top: 250,
-            right: 380,
-            bottom: 250,
-            left: 380
+            top: (document.getElementById("vis2").offsetWidth) / 2,
+            right: document.getElementById("vis2").offsetWidth / 2,
+            bottom: (document.getElementById("vis2").offsetWidth) / 2,
+            left: document.getElementById("vis2").offsetWidth / 2
         },
         radius = Math.min(margin.top, margin.right, margin.bottom, margin.left) - 10;
 
@@ -77,8 +77,6 @@ require(["https://d3js.org/d3.v3.min.js"], function (d3) {
         return angle;
     }
     function mouseOverArc(d) {
-        d3.select(this).attr("stroke", "black")
-
         tooltip.html(format_description(d));
         return tooltip.transition()
             .duration(50)
@@ -110,7 +108,7 @@ require(["https://d3js.org/d3.v3.min.js"], function (d3) {
             .nodes(root)
             .forEach(function (d) {
                 d._children = d.children;
-                d.sum = d.value;
+                d.sum = Math.log2(d.value);
                 d.key = key(d);
                 d.fill = fill(d);
             });
@@ -138,6 +136,9 @@ require(["https://d3js.org/d3.v3.min.js"], function (d3) {
             .data(partitioned_data)
             .enter().append("path")
             .attr("d", arc)
+            .attr("id", function (d) {
+                return "vis2_" + d.name;
+            })
             .style("fill", function (d) {
                 return d.fill;
             })
@@ -298,7 +299,7 @@ require(["https://d3js.org/d3.v3.min.js"], function (d3) {
                 .filter(filter_min_arc_size_text)
                 .text(function (d, i) {
                     if (typeof d.name == "number") {
-                        return "";
+                        return d.name;
                     }
                     else if (d.name.length < 11) {
                         return d.name;
