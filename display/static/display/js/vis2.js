@@ -161,7 +161,7 @@ require(["https://d3js.org/d3.v3.min.js"], function (d3) {
                 return radius / 3 * d.depth;
             })
             .attr("dx", "6") // margin
-            .attr("dy", ".35em") // vertical-align	
+            .attr("dy", ".35em") // vertical-align
             .text(function (d, i) {
                 if (typeof d.name == "number") {
                     return "";
@@ -299,7 +299,7 @@ require(["https://d3js.org/d3.v3.min.js"], function (d3) {
                 .filter(filter_min_arc_size_text)
                 .text(function (d, i) {
                     if (typeof d.name == "number") {
-                        return d.name;
+                        return "";
                     }
                     else if (d.name.length < 11) {
                         return d.name;
