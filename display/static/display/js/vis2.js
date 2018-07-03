@@ -1,4 +1,12 @@
 var url = window.location.href + "json";
+
+function scaleOne(value) {
+    return value
+}
+
+function scaleTwo(value) {
+    return Math.log2(value);
+}
 require(["https://d3js.org/d3.v3.min.js"], function (d3) {
     var margin = {
             top: (document.getElementById("vis2").offsetWidth) / 2,
@@ -108,7 +116,8 @@ require(["https://d3js.org/d3.v3.min.js"], function (d3) {
             .nodes(root)
             .forEach(function (d) {
                 d._children = d.children;
-                d.sum = Math.log2(d.value);
+                // See which scale to use
+                d.sum = scaleOne(d.value);
                 d.key = key(d);
                 d.fill = fill(d);
             });
@@ -125,10 +134,12 @@ require(["https://d3js.org/d3.v3.min.js"], function (d3) {
         var center = svg.append("circle")
             .attr("r", radius / 3)
             .attr("fill", "white")
+            .attr("id", "zoomout")
             .on("click", zoomOut);
 
         center.append("title")
-            .text("zoom out");
+            .text("zoom out")
+            .attr("id", "zoom-out");
 
         var partitioned_data = partition.nodes(root).slice(1)
 
@@ -266,6 +277,9 @@ require(["https://d3js.org/d3.v3.min.js"], function (d3) {
                     .on("mouseover", mouseOverArc)
                     .on("mousemove", mouseMoveArc)
                     .on("mouseout", mouseOutArc)
+                    .attr("id", function (d) {
+                        return "vis2_" + d.name;
+                    })
                     .each(function (d) {
                         this._current = enterArc(d);
                     });

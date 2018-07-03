@@ -24,7 +24,7 @@ require(["https://d3js.org/d3.v4.min.js"], function (d3) {
         // append the svg object to the body of the page
         // appends a 'group' element to 'svg'
         // moves the 'group' element to the top left margin
-        var svg1 = d3.select("#tree-container").append("svg").attr("width", width).attr("height", height).call(d3.zoom().on("zoom", function () {
+        var svg1 = d3.select("#tree-container").append("svg").attr("width", width).attr("height", height).call(d3.zoom().scaleExtent([0.1, 100]).on("zoom", function () {
             svg1.attr("transform", d3.event.transform)
             zoomDepth = d3.zoomTransform(this).k; //Get zoom depth
             y_trans = d3.zoomTransform(this).x; //Get drag correction horizontal
@@ -135,6 +135,8 @@ require(["https://d3js.org/d3.v4.min.js"], function (d3) {
                 return "vis1_" + d.data.name
             }).attr('class', 'node').attr('r', 1e-6).style("fill", function (d) {
                 return d._children ? "#1B3A5E" : "#F96332";
+            }).attr("open", function (d) {
+                return d._children ? "false" : "true";
             }).style("stroke-width", 3 / zoomDepth).style("stroke", "#1B3A5E");
 
 
