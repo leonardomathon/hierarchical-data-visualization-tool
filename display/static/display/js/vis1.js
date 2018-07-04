@@ -137,7 +137,10 @@ require(["https://d3js.org/d3.v4.min.js"], function (d3) {
                 return d._children ? "#1B3A5E" : "#F96332";
             }).attr("open", function (d) {
                 return d._children ? "false" : "true";
-            }).style("stroke-width", 3 / zoomDepth).style("stroke", "#1B3A5E");
+            }).attr("level", function(d) {
+                return 1;
+            })
+            .style("stroke-width", 3 / zoomDepth).style("stroke", "#1B3A5E");
 
 
             // Remove any old text
