@@ -82,6 +82,7 @@ require(["https://d3js.org/d3.v3.min.js"], function (d3) {
         return _seq;
     }
 
+    // Mathness
     function computeTextRotation(d) {
         var angle = (d.x + d.dx / 2) * 180 / Math.PI - 90
         return angle;
@@ -108,10 +109,7 @@ require(["https://d3js.org/d3.v3.min.js"], function (d3) {
     var root_ = null;
     d3.json(url, function (error, root) {
         if (error) return console.warn(error);
-        // Compute the initial layout on the entire tree to sum sizes.
-        // Also compute the full name and fill color for each node,
-        // and stash the children so they can be restored as we descend.
-
+        // Partitioning
         partition
             .value(function (d) {
                 return d.branch_length;
@@ -119,13 +117,15 @@ require(["https://d3js.org/d3.v3.min.js"], function (d3) {
             .nodes(root)
             .forEach(function (d) {
                 d._children = d.children;
-                // See which scale to use
+                // This is the scale
+                // To get another scale e.g Math.log2(d.value)
+                // Viz will resize
                 d.sum = d.value;
                 d.key = key(d);
                 d.fill = fill(d);
             });
 
-        // Define how many layers get drawn
+        // Define how many layers get drawn, in our case 2
         partition
             .children(function (d, depth) {
                 return depth < 2 ? d._children : null;
@@ -140,6 +140,7 @@ require(["https://d3js.org/d3.v3.min.js"], function (d3) {
             var centerNode = "";
         }
 
+        // draw the main circle
         var center = svg.append("circle")
             .attr("r", radius / 3)
             .attr("fill", "white")
@@ -150,6 +151,7 @@ require(["https://d3js.org/d3.v3.min.js"], function (d3) {
 
         var partitioned_data = partition.nodes(root).slice(1)
 
+        // Draw each node
         var path = svg.selectAll("path")
             .data(partitioned_data)
             .enter().append("path")
@@ -171,6 +173,7 @@ require(["https://d3js.org/d3.v3.min.js"], function (d3) {
             .on("mousemove", mouseMoveArc)
             .on("mouseout", mouseOutArc);
 
+        // Draw the text
         var texts = svg.selectAll("text")
             .data(partitioned_data)
             .enter().append("text")
@@ -199,7 +202,8 @@ require(["https://d3js.org/d3.v3.min.js"], function (d3) {
                     return d.name.substr(0, 7) + "...";
                 }
             });
-
+        
+        // Zoom in only if p has children
         function zoomIn(p) {
             if (p.depth > 1) p = p.parent;
             if (!p.children) return;
@@ -208,7 +212,7 @@ require(["https://d3js.org/d3.v3.min.js"], function (d3) {
             }
             zoom(p, p);
         }
-
+        // Zoom out only if p has a parent i.e p is not the root
         function zoomOut(p) {
             if (!p.parent) return;
             if (typeof root.name == "string") {
@@ -216,13 +220,7 @@ require(["https://d3js.org/d3.v3.min.js"], function (d3) {
             }
             zoom(p.parent, p);
         }
-        function clearSvg() {
-            var a = document.getElementById('svgvis2');
-            var circles = a.getElementsByTagName('circle');
-            var length = circles.length - 1;
-            console.log(length);
-            circles[length].remove()
-        }
+    
         // Zoom to the specified new root.
         function zoom(root, p) {
             var center = svg.append("circle")
@@ -241,6 +239,7 @@ require(["https://d3js.org/d3.v3.min.js"], function (d3) {
                 exitArc,
                 outsideAngle = d3.scale.linear().domain([0, 2 * Math.PI]);
 
+            // Mathness
             function insideArc(d) {
                 return p.key > d.key ? {
                     depth: d.depth - 1,
@@ -265,21 +264,26 @@ require(["https://d3js.org/d3.v3.min.js"], function (d3) {
                 };
             }
 
-            center.datum(root);
+            center.datum(root); 
 
-            // When zooming in, arcs enter from the outside and exit to the inside.
-            // Entering outside arcs start from the old layout.
-            if (root === p) enterArc = outsideArc, exitArc = insideArc, outsideAngle.range([p.x, p.x + p.dx]);
+            // Do the approriate animations
+            if (root !== p) {
+                exitArc = outsideArc, 
+                enterArc = insideArc, 
+                outsideAngle.range([p.x, p.x + p.dx]);
+            }
+            if (root === p) {
+                exitArc = insideArc, 
+                enterArc = outsideArc, 
+                outsideAngle.range([p.x, p.x + p.dx]);
+            }
 
+            // Partitioning
             var new_data = partition.nodes(root).slice(1)
 
             path = path.data(new_data, function (d) {
                 return d.key;
-            });
-
-            // When zooming out, arcs enter from the inside and exit to the outside.
-            // Exiting outside arcs transition to the new layout.
-            if (root !== p) enterArc = insideArc, exitArc = outsideArc, outsideAngle.range([p.x, p.x + p.dx]);
+            });          
 
             d3.transition().duration(d3.event.altKey ? 7500 : 750).each(function () {
                 path.exit().transition()
@@ -315,15 +319,13 @@ require(["https://d3js.org/d3.v3.min.js"], function (d3) {
                     });
             });
 
-
+            // Next few lines draws the text
             texts = texts.data(new_data, function (d) {
                 return d.key;
             })
 
-            texts.exit()
-                .remove()
-            texts.enter()
-                .append("text")
+            texts.exit().remove()
+            texts.enter().append("text")
 
             texts.style("opacity", 0)
                 .attr("transform", function (d) {
