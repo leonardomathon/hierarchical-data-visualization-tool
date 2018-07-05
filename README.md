@@ -2,6 +2,8 @@
 This is our visualization project which was build for 2IOA0 DBL HTI + Webtech course (2017-2018) at the TU/Eindhoven.
 This visualization application parses Newick formatted files into a JSON file. This JSON will then be rendered to the page using D3.js.
 
+To get an impression of this project, you can visit the [live version](https://dbl.logicbit.nl/).
+
 ## Getting started ##
 These instruction will help you get this project up and running. 
 
