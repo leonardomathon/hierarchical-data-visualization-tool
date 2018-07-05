@@ -134,15 +134,20 @@ require(["https://d3js.org/d3.v3.min.js"], function (d3) {
                 return d.sum;
             });
 
-        var center = svg.append("circle")
-            .attr("r", radius / 3)
-            .attr("fill", "white")
-            .attr("id", "zoomout")
-            .on("click", zoomOut);
-
-        center.append("title")
-            .text("zoom out")
-            .attr("id", "zoom-out");
+			if(typeof root.name == "string") {
+				var centerNode = "\n\n" + root.name;
+			}
+            else {
+				var centerNode = "";
+			}
+			
+			var center = svg.append("circle")
+			.attr("r", radius / 3)
+			.attr("fill", "white")
+			.on("click", zoomOut);
+			
+			center.append("title")
+			.text("Zoom Out" + centerNode);
 
         var partitioned_data = partition.nodes(root).slice(1)
 
@@ -200,16 +205,33 @@ require(["https://d3js.org/d3.v3.min.js"], function (d3) {
         function zoomIn(p) {
             if (p.depth > 1) p = p.parent;
             if (!p.children) return;
+			if(typeof root.name == "string") {
+				centerNode = "\n\n" +  p.name;
+			}                                       
             zoom(p, p);
         }
 
         function zoomOut(p) {
             if (!p.parent) return;
+			if(typeof root.name == "string") {
+				centerNode = "\n\n" + p.parent.name;
+			}
             zoom(p.parent, p);
         }
 
         // Zoom to the specified new root.
         function zoom(root, p) {
+			var center = svg.append("circle")
+			.attr("r", radius / 3)
+			.attr("fill", "white")
+			.on("click", zoomOut)
+            .on("mouseover", mouseOverArc)
+            .on("mousemove", mouseMoveArc)
+            .on("mouseout", mouseOutArc);
+			
+			center.append("title")
+			.text("Zoom Out" + centerNode);
+			
             if (document.documentElement.__transition__) return;
 
             // Rescale outside angles to match the new layout.
