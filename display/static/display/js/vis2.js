@@ -3,7 +3,7 @@ var url = window.location.href + "json";
 
 // Require in the d3v3 library
 require(["https://d3js.org/d3.v3.min.js"], function (d3) {
-    
+
     // Set margin of the svg
     var margin = {
             top: (document.getElementById("vis2").offsetWidth) / 2,
@@ -12,7 +12,7 @@ require(["https://d3js.org/d3.v3.min.js"], function (d3) {
             left: document.getElementById("vis2").offsetWidth / 2
         },
         radius = Math.min(margin.top, margin.right, margin.bottom, margin.left) - 10;
-    
+
     // Function to determine if text should be displayed
     function filter_min_arc_size_text(d, i) {
         return (d.dx * d.depth * radius / 2) > 14
@@ -30,9 +30,10 @@ require(["https://d3js.org/d3.v3.min.js"], function (d3) {
     var svg = d3.select("#vis2").append("svg")
         .attr("width", margin.left + margin.right)
         .attr("height", margin.top + margin.bottom)
+        .attr('id', 'svgvis2')
         .append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-    
+
     var partition = d3.layout.partition()
         .sort(function (a, b) {
             return b.value - a.value;
@@ -60,24 +61,22 @@ require(["https://d3js.org/d3.v3.min.js"], function (d3) {
         .style("color", "#f96332")
         .style("opacity", 0)
         .style("z-index", "100000");
-    
+
     // Legend
     function format_description(d) {
         var description = d.description;
         _seq = "";
         while (typeof d.parent != "undefined") {
             if (typeof d.name == "number") {
-                _seq = " " + " / " + _seq;
-            }
-            else {
+                _seq = "junction " + " / " + _seq;
+            } else {
                 _seq = d.name + " / " + _seq;
             }
             d = d.parent
         }
         if (typeof d.name == "number") {
             _seq = " " + " / " + _seq;
-        }
-        else {
+        } else {
             _seq = d.name + " / " + _seq;
         }
         return _seq;
@@ -87,6 +86,7 @@ require(["https://d3js.org/d3.v3.min.js"], function (d3) {
         var angle = (d.x + d.dx / 2) * 180 / Math.PI - 90
         return angle;
     }
+
     function mouseOverArc(d) {
         tooltip.html(format_description(d));
         return tooltip.transition()
@@ -134,20 +134,19 @@ require(["https://d3js.org/d3.v3.min.js"], function (d3) {
                 return d.sum;
             });
 
-			if(typeof root.name == "string") {
-				var centerNode = "\n\n" + root.name;
-			}
-            else {
-				var centerNode = "";
-			}
-			
-			var center = svg.append("circle")
-			.attr("r", radius / 3)
-			.attr("fill", "white")
-			.on("click", zoomOut);
-			
-			center.append("title")
-			.text("Zoom Out" + centerNode);
+        if (typeof root.name == "string") {
+            var centerNode = "\n\n" + root.name;
+        } else {
+            var centerNode = "";
+        }
+
+        var center = svg.append("circle")
+            .attr("r", radius / 3)
+            .attr("fill", "white")
+            .on("click", zoomOut);
+
+        center.append("title")
+            .text("Zoom Out" + centerNode);
 
         var partitioned_data = partition.nodes(root).slice(1)
 
@@ -163,6 +162,9 @@ require(["https://d3js.org/d3.v3.min.js"], function (d3) {
             })
             .each(function (d) {
                 this._current = updateArc(d);
+            })
+            .attr("depth", function (d) {
+                return d.depth;
             })
             .on("click", zoomIn)
             .on("mouseover", mouseOverArc)
@@ -184,20 +186,16 @@ require(["https://d3js.org/d3.v3.min.js"], function (d3) {
             .text(function (d, i) {
                 if (typeof d.name == "number") {
                     return "";
-                }
-                else if (d.name.length < 11) {
+                } else if (d.name.length < 11) {
                     return d.name;
-                }
-                else if (d.name.indexOf(' ') >= 0) {
+                } else if (d.name.indexOf(' ') >= 0) {
                     var fields = d.name.split(' ');
                     if (fields[0].length < 8) {
                         return fields[0] + "...";
-                    }
-                    else {
+                    } else {
                         return d.name.substr(0, 7) + "...";
                     }
-                }
-                else {
+                } else {
                     return d.name.substr(0, 7) + "...";
                 }
             });
@@ -205,33 +203,37 @@ require(["https://d3js.org/d3.v3.min.js"], function (d3) {
         function zoomIn(p) {
             if (p.depth > 1) p = p.parent;
             if (!p.children) return;
-			if(typeof root.name == "string") {
-				centerNode = "\n\n" +  p.name;
-			}                                       
+            if (typeof root.name == "string") {
+                centerNode = "\n\n" + p.name;
+            }
             zoom(p, p);
         }
 
         function zoomOut(p) {
             if (!p.parent) return;
-			if(typeof root.name == "string") {
-				centerNode = "\n\n" + p.parent.name;
-			}
+            if (typeof root.name == "string") {
+                centerNode = "\n\n" + p.parent.name;
+            }
             zoom(p.parent, p);
         }
-
+        function clearSvg() {
+            var a = document.getElementById('svgvis2');
+            var circles = a.getElementsByTagName('circle');
+            var length = circles.length - 1;
+            console.log(length);
+            circles[length].remove()
+        }
         // Zoom to the specified new root.
         function zoom(root, p) {
-			var center = svg.append("circle")
-			.attr("r", radius / 3)
-			.attr("fill", "white")
-			.on("click", zoomOut)
-            .on("mouseover", mouseOverArc)
-            .on("mousemove", mouseMoveArc)
-            .on("mouseout", mouseOutArc);
-			
-			center.append("title")
-			.text("Zoom Out" + centerNode);
-			
+            var center = svg.append("circle")
+                .attr("r", radius / 3)
+                .attr("fill", "white")
+                .attr("id", "zoom_" + p.name)
+                .on("click", zoomOut)
+
+            center.append("title")
+                .text("Zoom Out" + centerNode);
+            
             if (document.documentElement.__transition__) return;
 
             // Rescale outside angles to match the new layout.
@@ -240,22 +242,19 @@ require(["https://d3js.org/d3.v3.min.js"], function (d3) {
                 outsideAngle = d3.scale.linear().domain([0, 2 * Math.PI]);
 
             function insideArc(d) {
-                return p.key > d.key ?
-                    {
-                        depth: d.depth - 1,
-                        x: 0,
-                        dx: 0
-                    } : p.key < d.key ?
-                    {
-                        depth: d.depth - 1,
-                        x: 2 * Math.PI,
-                        dx: 0
-                    } :
-                    {
-                        depth: 0,
-                        x: 0,
-                        dx: 2 * Math.PI
-                    };
+                return p.key > d.key ? {
+                    depth: d.depth - 1,
+                    x: 0,
+                    dx: 0
+                } : p.key < d.key ? {
+                    depth: d.depth - 1,
+                    x: 2 * Math.PI,
+                    dx: 0
+                } : {
+                    depth: 0,
+                    x: 0,
+                    dx: 2 * Math.PI
+                };
             }
 
             function outsideArc(d) {
@@ -339,26 +338,20 @@ require(["https://d3js.org/d3.v3.min.js"], function (d3) {
                 .text(function (d, i) {
                     if (typeof d.name == "number") {
                         return "";
-                    }
-                    else if (d.name.length < 11) {
+                    } else if (d.name.length < 11) {
                         return d.name;
-                    }
-                    else if (d.name.indexOf(' ') >= 0) {
+                    } else if (d.name.indexOf(' ') >= 0) {
                         var fields = d.name.split(' ');
                         if (fields[0].length < 8) {
                             return fields[0] + "...";
-                        }
-                        else {
+                        } else {
                             return d.name.substr(0, 7) + "...";
                         }
-                    }
-                    else {
+                    } else {
                         return d.name.substr(0, 7) + "...";
                     }
                 })
                 .transition().delay(750).style("opacity", 1)
-
-
         }
     });
 

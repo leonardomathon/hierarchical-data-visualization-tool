@@ -122,6 +122,8 @@ require(["https://d3js.org/d3.v4.min.js"], function (d3) {
             // Enter any new nodes at the parent's previous position.
             var nodeEnter = node.enter().append('g').attr('class', 'node').attr("transform", function (d) {
                 return "translate(" + source.y0 + "," + source.x0 + ")";
+            }).attr('id', function (d) {
+                return "vis1main_" + d.data.name
             }).on('click', click);
 
             // UPDATE
@@ -131,12 +133,14 @@ require(["https://d3js.org/d3.v4.min.js"], function (d3) {
             svg1.selectAll("circle").remove();
 
             // Add Circle for the nodes
-            nodeUpdate.append('circle').attr('id', function(d) {
+            nodeUpdate.append('circle').attr('id', function (d) {
                 return "vis1_" + d.data.name
-            }).attr('class', 'node').attr('r', 1e-6).style("fill", function (d) {
+            })
+            .attr('class', 'node')
+            .attr('r', 1e-6).style("fill", function (d) {
                 return d._children ? "#1B3A5E" : "#F96332";
-            }).attr("open", function (d) {
-                return d._children ? false : true;
+            }).attr("type", function (d) {
+                return d._children ? 'closed' : 'open';
             }).attr("level", function(d) {
                 return d.depth;
             })
