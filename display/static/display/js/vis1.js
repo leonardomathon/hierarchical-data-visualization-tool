@@ -24,7 +24,7 @@ require(["https://d3js.org/d3.v4.min.js"], function (d3) {
         // append the svg object to the body of the page
         // appends a 'group' element to 'svg'
         // moves the 'group' element to the top left margin
-        var svg1 = d3.select("#tree-container").append("svg").attr("width", width).attr("height", height).call(d3.zoom().scaleExtent([0.1, 100]).on("zoom", function () {
+        var svg1 = d3.select("#tree-container").append("svg").attr("width", width).attr("height", height).attr('id', 'tree-vis').call(d3.zoom().scaleExtent([0.1, 100]).on("zoom", function () {
             svg1.attr("transform", d3.event.transform)
             zoomDepth = d3.zoomTransform(this).k; //Get zoom depth
             y_trans = d3.zoomTransform(this).x; //Get drag correction horizontal
@@ -59,7 +59,7 @@ require(["https://d3js.org/d3.v4.min.js"], function (d3) {
 
         // Collapse the node and all it's children
         function collapse(d) {
-            if (d.children && d.depth > 0) {
+            if (d.children && d.depth > 1) {
                 d._children = d.children;
                 d._children.forEach(collapse);
                 d.children = null;
@@ -138,7 +138,7 @@ require(["https://d3js.org/d3.v4.min.js"], function (d3) {
             }).attr("open", function (d) {
                 return d._children ? "false" : "true";
             }).attr("level", function(d) {
-                return 1;
+                return d.depth;
             })
             .style("stroke-width", 3 / zoomDepth).style("stroke", "#1B3A5E");
 

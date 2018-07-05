@@ -1,12 +1,7 @@
+// Get json file of current dataset
 var url = window.location.href + "json";
 
-function scaleOne(value) {
-    return value
-}
-
-function scaleTwo(value) {
-    return Math.log2(value);
-}
+// Require in the d3v3 library
 require(["https://d3js.org/d3.v3.min.js"], function (d3) {
     var margin = {
             top: (document.getElementById("vis2").offsetWidth) / 2,
@@ -19,19 +14,22 @@ require(["https://d3js.org/d3.v3.min.js"], function (d3) {
     function filter_min_arc_size_text(d, i) {
         return (d.dx * d.depth * radius / 3) > 14
     };
+
+    // Coloring and luminance
     var hue = d3.scale.category20();
 
-    var luminance = d3.scale.sqrt()
+    var luminance = d3.scale.linear()
         .domain([0, 1e6])
         .clamp(true)
         .range([95, 1]);
 
+    // Put graph in right div
     var svg = d3.select("#vis2").append("svg")
         .attr("width", margin.left + margin.right)
         .attr("height", margin.top + margin.bottom)
         .append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
+    
     var partition = d3.layout.partition()
         .sort(function (a, b) {
             return b.value - a.value;
@@ -56,10 +54,11 @@ require(["https://d3js.org/d3.v3.min.js"], function (d3) {
     var tooltip = d3.select("#label")
         .append("div")
         .attr("id", "tooltip")
-        .style("z-index", "10")
+        .style("color", "black")
         .style("opacity", 0)
-        .style("color", "black");
-
+        .style("z-index", "100000");
+    
+    // Legend
     function format_description(d) {
         var description = d.description;
         _seq = "";
@@ -80,6 +79,7 @@ require(["https://d3js.org/d3.v3.min.js"], function (d3) {
         }
         return _seq;
     }
+
     function computeTextRotation(d) {
         var angle = (d.x + d.dx / 2) * 180 / Math.PI - 90
         return angle;
@@ -117,12 +117,12 @@ require(["https://d3js.org/d3.v3.min.js"], function (d3) {
             .forEach(function (d) {
                 d._children = d.children;
                 // See which scale to use
-                d.sum = scaleOne(d.value);
+                d.sum = d.value;
                 d.key = key(d);
                 d.fill = fill(d);
             });
 
-        // Now redefine the value function to use the previously-computed sum.
+        // Define how many layers get drawn
         partition
             .children(function (d, depth) {
                 return depth < 2 ? d._children : null;

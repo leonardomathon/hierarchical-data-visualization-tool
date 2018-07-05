@@ -7,7 +7,7 @@
     </div>
 </div>
 <div class="content">
-    <div class="row">
+    <div class="row" id='photo'>
         <div class="col-lg-12">
             <div class="card card-chart">
                 <div class="card-header">
@@ -104,7 +104,7 @@
                     </style>
                     <div id="tree-container"></div>
                     <div>
-                        <button id='saveButton1' class="btn btn-primary">Export Visualization 1 to PNG</button>
+                        <a id='saveButton2' href="javascript:returnDataURL1();" class="btn btn-primary" download="exportgraph">Export Visualization 1 to PNG</a>
                     </div>
 
                 </div>
@@ -124,7 +124,7 @@
                             <div id="label"></div>
                         </div>
                         <div>
-                        <button id='saveButton2' class="btn btn-primary">Export Visualization 2 to PNG</button>
+                        <a id='saveButton2' href="javascript:returnDataURL2();" class="btn btn-primary" download="exportgraph">Export Visualization 2 to PNG</a>
                         </div>
 
                     <style>
@@ -141,17 +141,19 @@
 </div>
 </div>
 {% include "display/modals.html" %}
+{% include "display/imgmodals.html" %}
 {% endblock content %} {% block content_scripts %}
 <script>
     $("#tree-container > svg").bind("wheel mousewheel", function (e) {
         e.preventDefault()
     });
+    
     </script>
-    <script src="https://cdn.rawgit.com/eligrey/canvas-toBlob.js/f1a01896135ab378aa5c0118eadd81da55e698d8/canvas-toBlob.js"></script>
     <script src="https://cdn.rawgit.com/eligrey/FileSaver.js/e9d941381475b5df8b7d7691013401e171014e89/FileSaver.min.js"></script>
-
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
     <script src="{% static "display/js/require.js" %}"></script>
     <script src="{% static "display/js/vis1.js" %}"></script>
     <script src="{% static "display/js/vis2.js" %}"></script>
     <script src="{% static "display/js/link.js" %}"></script>
+    <script src="{% static "display/js/screenshot.js" %}"></script>
 {% endblock content_scripts %}

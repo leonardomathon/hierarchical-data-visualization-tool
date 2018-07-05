@@ -16,6 +16,7 @@ $("#tree-container").click(function (event) {
     var id = ($(event.target)[0].id);
     // See if clicked node is open or closed
     var open = $(event.target)[0]["attributes"][3]
+    var depth = $(event.target)[0]["attributes"][4]
     if (id.startsWith("vis1_")) {
         if (open == "true") {
             console.log("Zoom out");
@@ -24,16 +25,26 @@ $("#tree-container").click(function (event) {
         }
     }
 });
+$("#vis2").click(function (event) {
+    // Get ID of clicked node
+    var id = ($(event.target)[0].id);
+    console.log(id);
+    // See if clicked node is open or closed
+    mimicVis1(id);
+    if (id.startsWith("vis2_")) {
+    }
+});
 function vis2Zoomout() {
     simClick(document.getElementById("zoom-out"), 'click');
 }
 
 function mimicVis1(id) {
     var clean = id.replace('vis2_', 'vis1_');
+    console.log(clean);
     simClick(document.getElementById(clean), 'click');
 }
 function mimicVis2(id) {
-    var clean = id.replace('vis1_', 'vis2_');
+    var clean = id.replace('vis1_', 'vis2_');   
     simClick(document.getElementById(clean), 'click');
 }
 
