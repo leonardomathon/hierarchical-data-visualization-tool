@@ -1,9 +1,7 @@
 {
   "python.pythonPath": "${workspaceFolder}\\DBL_env\\Scripts\\python.exe",
   "files.exclude": {
-    "__error": "Not found",
-    "DBL_env": true,
-    "now-ui": true
+    "__error": "Not found"
   },
   "python.formatting.provider": "yapf"
 }

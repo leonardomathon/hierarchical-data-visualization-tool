@@ -59,7 +59,7 @@ require(["https://d3js.org/d3.v4.min.js"], function (d3) {
 
         // Collapse the node and all it's children
         function collapse(d) {
-            if (d.children && d.depth > 1) {
+            if (d.children && d.depth > 0) {
                 d._children = d.children;
                 d._children.forEach(collapse);
                 d.children = null;
@@ -136,7 +136,7 @@ require(["https://d3js.org/d3.v4.min.js"], function (d3) {
             }).attr('class', 'node').attr('r', 1e-6).style("fill", function (d) {
                 return d._children ? "#1B3A5E" : "#F96332";
             }).attr("open", function (d) {
-                return d._children ? "false" : "true";
+                return d._children ? false : true;
             }).attr("level", function(d) {
                 return d.depth;
             })

@@ -3,6 +3,8 @@ var url = window.location.href + "json";
 
 // Require in the d3v3 library
 require(["https://d3js.org/d3.v3.min.js"], function (d3) {
+    
+    // Set margin of the svg
     var margin = {
             top: (document.getElementById("vis2").offsetWidth) / 2,
             right: document.getElementById("vis2").offsetWidth / 2,
@@ -10,9 +12,10 @@ require(["https://d3js.org/d3.v3.min.js"], function (d3) {
             left: document.getElementById("vis2").offsetWidth / 2
         },
         radius = Math.min(margin.top, margin.right, margin.bottom, margin.left) - 10;
-
+    
+    // Function to determine if text should be displayed
     function filter_min_arc_size_text(d, i) {
-        return (d.dx * d.depth * radius / 3) > 14
+        return (d.dx * d.depth * radius / 2) > 14
     };
 
     // Coloring and luminance
@@ -54,7 +57,7 @@ require(["https://d3js.org/d3.v3.min.js"], function (d3) {
     var tooltip = d3.select("#label")
         .append("div")
         .attr("id", "tooltip")
-        .style("color", "black")
+        .style("color", "#f96332")
         .style("opacity", 0)
         .style("z-index", "100000");
     

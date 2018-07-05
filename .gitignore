@@ -104,3 +104,7 @@ venv.bak/
 DBL_vis/db.sqlite3
 DBL_vis/uploads/
 db.sqlite3
+
+# vscode
+.vs/
+.vscode/
