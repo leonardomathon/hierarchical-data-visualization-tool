@@ -29,6 +29,7 @@ $("#tree-container").click(function (event) {
 });
 $("#vis2").click(function (event) {
     try {
+        // Get ID of clicked node
         var id = ($(event.target)[0].id);
         console.log(id);
         if (id.startsWith("vis2_")) {
@@ -40,8 +41,6 @@ $("#vis2").click(function (event) {
     } catch (err) {
         console.log('There was an error with the data link')
     }
-    // Get ID of clicked node
-
 });
 
 function vis1Zoomout(id) {

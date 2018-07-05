@@ -1,5 +1,4 @@
 {% extends "base.html" %}
-
 {% block content %}
 <div class="panel-header panel-header-lg" style="height: 350px;">
   <div style="margin-left: 2rem;margin-right: 2rem;color:#fff;">
@@ -36,7 +35,8 @@
           <h4 class="card-title"> Upload Dataset</h4>
         </div>
         <div class="card-body">
-          <form action="/upload/" method="post" class="form-horizontal" enctype="multipart/form-data">
+          {% include "loader.html" %}
+          <form action="/upload/" id="upload" method="post" class="form-horizontal" enctype="multipart/form-data">
               {% csrf_token %}
               <div class="form-group">
                             <div class="col-sm-offset-2 col-sm-10">

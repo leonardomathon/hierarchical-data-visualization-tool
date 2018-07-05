@@ -33,12 +33,12 @@ li {
                         <p>Home</p>
                     </a>
                 </li>
-                <li class="{% if request.path == '/upload/' %}active{% endif %}">
+                <!-- <li class="{% if request.path == '/upload/' %}active{% endif %}">
                     <a href="/upload">
                         <i class="now-ui-icons arrows-1_cloud-upload-94"></i>
                         <p>Upload</p>
                     </a>
-                </li>
+                </li> -->
                 <li class="{% if '/display/' in request.path %}active{% endif %}">
                     <a href="/display">
                         <i class="now-ui-icons design_image"></i>
@@ -225,6 +225,16 @@ function searchData() {
             
     }
 }
+try {
+    $('#upload').submit(function(e){
+        var loader = document.getElementById('loading');
+        loader.setAttribute('style', 'position: absolute; left: 50%; top: 35%');
+        document.getElementById('upload').setAttribute('style', 'visibility:hidden;');
+    });
+} catch (err) {
+    // Not important ;)
+}
+
  
 </script>
 {% block content_scripts %}  {% endblock content_scripts %}
