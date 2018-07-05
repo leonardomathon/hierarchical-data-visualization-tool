@@ -4,6 +4,8 @@ This visualization application parses Newick formatted files into a JSON file. T
 
 To get an impression of this project, you can visit the [live version](https://dbl.logicbit.nl/).
 
+This tool is able to read and visualize Newick datasets using a node-link tree diagram and a sunburst graph. These two visualizations are interactable with simple mouse gestures. 
+
 ## Getting started ##
 These instruction will help you get this project up and running. 
 
@@ -65,7 +67,7 @@ Next run the command ```python manage.py migrate``` to setup the database. Then 
 ```url: "/upload"```
 This app handles the file uploading for our application. The model ```Data()``` stores the dataname, filepath and creation date. ```DBLVis\upload\validator.py``` handles the validation of the uploaded file, this can only be a '.tre' extension. If the dataset is valid, it will be saved to the server and added to the database.
 
-### Display app ###
+#### Display app ####
 ```url: "/display"```
 The display app handles the visualization display as well as parsing the file once it has been uploaded. When a user has uploaded their dataset, he will be sent to the visualization page of that uploaded dataset. This url has the following format ```/display/{{dataset id}}```. When arriving at this page, the display will check if the dataset content is valid and if it is already parsed. If that is not the case it will parse the dataset and save it to the server. If the content of the dataset is invalid it will delete the dataset from the server and from the database. After that it will redirect the user to the homepage with and error message. If the dataset is valid and has already been parsed the display app will display the visualizations. 
 
